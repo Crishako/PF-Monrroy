@@ -1,0 +1,7 @@
+<h1>Alumnos</h1>
+
+<ng-container *ngIf="students$ | async as students ">
+    <ul *ngFor="let student of students">
+        <li>{{student.nombreCompleto}}</li>
+    </ul>
+</ng-container>

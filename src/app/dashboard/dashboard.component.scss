@@ -1,0 +1,38 @@
+
+  
+  .example-sidenav-content {
+    // display: flex;
+    height: 100%;
+    // align-items: center;
+    // justify-content: center;
+  }
+
+  .example-container{
+    height: 100%;
+}
+  
+  .example-card {
+    max-width: 400px;
+  }
+  
+  .example-header-image {
+    background-image: url("https://material.angular.io/assets/img/examples/shiba1.jpg");
+    background-size: cover;
+  }
+  
+  .dashboard-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+  
+  .dashboard-sidebar {
+    width: 200px;
+    
+  }
+  
+  .mat-drawer-content {
+    flex: 1;
+  }
+  
+  

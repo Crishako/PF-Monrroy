@@ -1,0 +1,77 @@
+{
+  "alumnos": [
+    {
+      "nombre": "Juan",
+      "apellido": "Pérez",
+      "edad": 20,
+      "curso": "Programación 101",
+      "calificaciones": {
+        "matematicas": 95,
+        "historia": 88,
+        "ciencias": 92
+      },
+      "genero": "Masculino"
+    },
+    {
+      "nombre": "María",
+      "apellido": "López",
+      "edad": 21,
+      "curso": "Diseño Gráfico Avanzado",
+      "calificaciones": {
+        "matematicas": 78,
+        "historia": 92,
+        "ciencias": 85
+      },
+      "genero": "Femenino"
+    },
+    {
+      "nombre": "Carlos",
+      "apellido": "Rodríguez",
+      "edad": 19,
+      "curso": "Inglés Intermedio",
+      "calificaciones": {
+        "matematicas": 20,
+        "historia": 35,
+        "ciencias": 60
+      },
+      "genero": "Masculino"
+    },
+    {
+      "nombre": "Ana",
+      "apellido": "González",
+      "edad": 22,
+      "curso": "Biología Avanzada",
+      "calificaciones": {
+        "matematicas": 72,
+        "historia": 80,
+        "ciencias": 95
+      },
+      "genero": "Femenino"
+    },
+    {
+      "nombre": "Pedro",
+      "apellido": "Fernández",
+      "edad": 20,
+      "curso": "Química Básica",
+      "calificaciones": {
+        "matematicas": 84,
+        "historia": 85,
+        "ciencias": 88
+      },
+      "genero": "Masculino"
+    },
+    {
+      "nombre": "Laura",
+      "apellido": "Martínez",
+      "edad": 23,
+      "curso": "Historia del Arte",
+      "calificaciones": {
+        "matematicas": 70,
+        "historia": 92,
+        "ciencias": 78
+      },
+      "genero": "Femenino"
+    }
+ 
+  ]
+}
