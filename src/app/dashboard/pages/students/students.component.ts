@@ -63,7 +63,6 @@ export class StudentsComponent {
 
   onEditStudent(student: number): void {
     let tipo =  'edit';
-    console.log('student',student);
     
     this.matDialog
       .open(StudentsDialogComponent, {

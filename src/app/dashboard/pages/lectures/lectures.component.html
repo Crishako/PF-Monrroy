@@ -1,1 +1,15 @@
-<p>lectures works!</p>
+<h1 appFontSize20>Clases</h1>
+
+<div class="d-flex justify-content-end mb-3">
+  <button (click)="addLecture()" mat-flat-button color="primary">
+    Agregar Clase
+  </button>
+</div>
+
+
+
+<app-lectures-table
+  [dataSource]="(lectures$ | async) || []"
+  (deleteLecture)="onDeleteLecture($event)"
+  (editLecture)="onEditLecture($event)"
+></app-lectures-table> 

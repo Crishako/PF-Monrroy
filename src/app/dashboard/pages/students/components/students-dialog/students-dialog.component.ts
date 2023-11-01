@@ -36,8 +36,6 @@ constructor(
   if (data.student) {
     this.studentService.getStudentById$(data.student).subscribe({
       next: (s) =>{
-        console.log(s);
-        
         if (s) {
           this.studentForm.patchValue(s);
         }

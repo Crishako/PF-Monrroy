@@ -27,19 +27,13 @@ constructor(
   // RECIBO LA DATA (Student)
   @Inject(MAT_DIALOG_DATA) public data:{course:number, tipo:string}
 ) {
-  console.log(data);
-  
   if (data.course) {
   
     
     this.courseService.getCourseById$(data.course).subscribe({
       next: (s) =>{
-        console.log(s);
-        
         if (s) {
           this.courseForm.patchValue(s);
-          console.log(this.courseForm);
-          
         }
       }
     })
