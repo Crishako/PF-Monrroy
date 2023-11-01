@@ -1,7 +1,20 @@
-<h1>Alumnos</h1>
+<h1 appFontSize20>Alumnos</h1>
 
-<ng-container *ngIf="students$ | async as students ">
+<div class="d-flex justify-content-end mb-3">
+  <button (click)="addStudent()" mat-flat-button color="primary">
+    Agregar alumno
+  </button>
+</div>
+
+<app-students-table
+  [dataSource]="(students$ | async) || []"
+  (deleteCourse)="onDeleteStudent($event)"
+  (editCourse)="onEditStudent($event)"
+></app-students-table>
+
+
+<!-- <ng-container *ngIf="students$ | async as students ">
     <ul *ngFor="let student of students">
-        <li>{{student.nombreCompleto}}</li>
-    </ul>
-</ng-container>
+        <li>{{student.nombre}}</li>
+    </ul> 
+</ng-container> -->

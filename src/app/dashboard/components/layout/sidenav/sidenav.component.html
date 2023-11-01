@@ -1,5 +1,5 @@
 <mat-nav-list class="sidenav-content">
-    <a mat-list-item [routerLink]='["/dashboard"]'  [activated]="true">Inicio</a>
-    <a mat-list-item routerLink="/dashboard/students" routerLinkActive="active">Alumnos</a>
+    <a mat-list-item [routerLink]="['/dashboard']" [activated]="isActive" (click)="setActive(true)">Inicio</a>
+    <a mat-list-item [routerLink]="['/dashboard/students']" [activated]="!isActive" (click)="setActive(false)">Alumnos</a>
     <!-- Agrega más elementos de navegación según tus necesidades -->
 </mat-nav-list>

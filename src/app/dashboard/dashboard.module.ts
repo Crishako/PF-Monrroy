@@ -10,7 +10,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
 import {MatSidenavModule} from '@angular/material/sidenav';
-import { HttpClientModule } from '@angular/common/http';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -21,12 +21,11 @@ import { HttpClientModule } from '@angular/common/http';
   imports: [
     CommonModule,
     DashboardRoutingModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatIconModule,
+    SharedModule,
     MatListModule,
     MatSidenavModule,
-    HttpClientModule
+    MatIconModule,
+    MatListModule,
     
   ],
   exports: [DashboardComponent],

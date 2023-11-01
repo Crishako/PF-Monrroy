@@ -1,0 +1,78 @@
+<h1 mat-dialog-title>
+    {{ isEditing ? "Editando Alumno" : isDeleting ? "Eliminando Alumno" : "Agregando Alumno" }}
+  </h1>
+  
+  <div mat-dialog-content>
+    <!-- Contenido... -->
+  
+    <ng-container *ngIf="isEditing || isAdding">
+      <!-- Contenido para la edición aquí -->
+      <form [formGroup]="studentForm">
+        <div class="row">
+          <div class="col-6">
+            <mat-form-field class="w-100">
+              <mat-label>Nombre</mat-label>
+              <input [formControl]="nombreControl" matInput />
+              <mat-error>
+                {{ studentForm.get("nombre")?.errors | formErrors }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-6">
+            <mat-form-field class="w-100">
+              <mat-label>Apellido</mat-label>
+              <input [formControl]="apellidoControl" matInput />
+              <mat-error>
+                {{ studentForm.get("apellido")?.errors | formErrors }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-12">
+            <mat-form-field class="w-100">
+              <mat-label>Edad</mat-label>
+              <input [formControl]="edadControl" matInput />
+              <mat-error>
+                {{ studentForm.get("edad")?.errors | formErrors }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-12">
+            <mat-form-field class="w-100">
+              <mat-label>Género</mat-label>
+              <input [formControl]="generoControl" matInput />
+              <mat-error>
+                {{ studentForm.get("genero")?.errors | formErrors }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-12">
+            <mat-form-field class="w-100">
+              <mat-label>Email</mat-label>
+              <input [formControl]="emailControl" matInput />
+              <mat-error>
+                {{ studentForm.get("email")?.errors | formErrors }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </form>
+    </ng-container>
+    
+    <ng-container *ngIf="isDeleting">
+      <p>¿Está seguro de que desea eliminar este alumno?</p>
+    </ng-container>
+  </div>
+  
+  <div mat-dialog-actions>
+    
+    <ng-container *ngIf="isEditing || isDeleting">
+      <button mat-dialog-close mat-button>Cancelar</button>
+      <button mat-button (click)="onSubmit()">{{ isEditing ? "Guardar" : "Eliminar" }}</button>
+    </ng-container>
+  
+    <ng-container *ngIf="!isEditing && !isDeleting">
+      <button mat-dialog-close mat-button>Cancelar</button>
+      <button (click)="onSubmit()" mat-button>{{ isEditing ? "Guardar" : "Agregar" }}</button>
+    </ng-container>
+  </div>
+  

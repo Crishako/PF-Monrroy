@@ -1,77 +1,94 @@
 {
   "alumnos": [
     {
+      "id": 1,
       "nombre": "Juan",
       "apellido": "Pérez",
       "edad": 20,
-      "curso": "Programación 101",
-      "calificaciones": {
-        "matematicas": 95,
-        "historia": 88,
-        "ciencias": 92
-      },
-      "genero": "Masculino"
+      "genero": "Masculino",
+      "email": "juan@example.com",
+      "cursos": [
+        {
+          "id": 101,
+          "nombre": "Programación 101",
+          "fecha_inicio": "2023-01-15",
+          "fecha_fin": "2023-05-30",
+          "descripcion": "Introducción a la programación",
+          "clases": [
+            {
+              "id": 1001,
+              "nombre": "Introducción a la Programación",
+              "profesor": "Dr. Smith",
+              "horario": "Lunes 9:00 AM - 11:00 AM",
+              "descripcion": "Clase introductoria a la programación",
+              "calificaciones": {
+                "certamen1": 90,
+                "certamen2": 85,
+                "certamen3": 92,
+                "examen": 88
+              }
+            },
+            {
+              "id": 1002,
+              "nombre": "Programación Avanzada",
+              "profesor": "Profesora Johnson",
+              "horario": "Miércoles 1:00 PM - 3:00 PM",
+              "descripcion": "Curso avanzado de programación",
+              "calificaciones": {
+                "certamen1": 88,
+                "certamen2": 92,
+                "certamen3": 89,
+                "examen": 95
+              }
+            }
+          ]
+        }
+      ]
     },
     {
+      "id": 2,
       "nombre": "María",
       "apellido": "López",
       "edad": 21,
-      "curso": "Diseño Gráfico Avanzado",
-      "calificaciones": {
-        "matematicas": 78,
-        "historia": 92,
-        "ciencias": 85
-      },
-      "genero": "Femenino"
-    },
-    {
-      "nombre": "Carlos",
-      "apellido": "Rodríguez",
-      "edad": 19,
-      "curso": "Inglés Intermedio",
-      "calificaciones": {
-        "matematicas": 20,
-        "historia": 35,
-        "ciencias": 60
-      },
-      "genero": "Masculino"
-    },
-    {
-      "nombre": "Ana",
-      "apellido": "González",
-      "edad": 22,
-      "curso": "Biología Avanzada",
-      "calificaciones": {
-        "matematicas": 72,
-        "historia": 80,
-        "ciencias": 95
-      },
-      "genero": "Femenino"
-    },
-    {
-      "nombre": "Pedro",
-      "apellido": "Fernández",
-      "edad": 20,
-      "curso": "Química Básica",
-      "calificaciones": {
-        "matematicas": 84,
-        "historia": 85,
-        "ciencias": 88
-      },
-      "genero": "Masculino"
-    },
-    {
-      "nombre": "Laura",
-      "apellido": "Martínez",
-      "edad": 23,
-      "curso": "Historia del Arte",
-      "calificaciones": {
-        "matematicas": 70,
-        "historia": 92,
-        "ciencias": 78
-      },
-      "genero": "Femenino"
+      "genero": "Femenino",
+      "email": "maria@example.com", 
+      "cursos": [
+        {
+          "id": 102,
+          "nombre": "Diseño Gráfico Avanzado",
+          "fecha_inicio": "2023-02-10",
+          "fecha_fin": "2023-06-20",
+          "descripcion": "Diseño gráfico creativo",
+          "clases": [
+            {
+              "id": 1003,
+              "nombre": "Fundamentos del Diseño",
+              "profesor": "Profesora Rodríguez",
+              "horario": "Martes 10:00 AM - 12:00 PM",
+              "descripcion": "Conceptos fundamentales de diseño",
+              "calificaciones": {
+                "certamen1": 78,
+                "certamen2": 92,
+                "certamen3": 85,
+                "examen": 90
+              }
+            },
+            {
+              "id": 1004,
+              "nombre": "Diseño Creativo",
+              "profesor": "Dr. García",
+              "horario": "Jueves 2:00 PM - 4:00 PM",
+              "descripcion": "Curso creativo de diseño gráfico",
+              "calificaciones": {
+                "certamen1": 85,
+                "certamen2": 88,
+                "certamen3": 92,
+                "examen": 89
+              }
+            }
+          ]
+        }
+      ]
     }
- 
   ]
 }
