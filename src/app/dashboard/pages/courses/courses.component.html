@@ -1,1 +1,8 @@
-<p>courses works!</p>
+<h1 appFontSize20>Cursos</h1>
+
+
+<app-courses-table
+  [dataSource]="(courses$ | async) || []"
+  (deleteCourse)="onDeleteCourse($event)"
+  (editCourse)="onEditCourse($event)"
+></app-courses-table>

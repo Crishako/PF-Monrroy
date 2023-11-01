@@ -23,6 +23,20 @@ import { HomeComponent } from './pages/home/home.component';
             ),
         },
         {
+          path: 'courses',
+          loadChildren: () =>
+            import('./pages/courses/courses.module').then(
+              (m) => m.CoursesModule
+            ),
+        },
+        {
+          path: 'lectures',
+          loadChildren: () =>
+            import('./pages/lectures/lectures.module').then(
+              (m) => m.LecturesModule
+            ),
+        },
+        {
           path: '**',
           redirectTo: 'home',
         },

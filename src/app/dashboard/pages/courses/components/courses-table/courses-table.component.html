@@ -6,8 +6,8 @@
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef>#</th>
   
-      <td mat-cell *matCellDef="let student">
-        {{ student.id }}
+      <td mat-cell *matCellDef="let course">
+        {{ course.id }}
       </td>
     </ng-container>
   
@@ -15,48 +15,39 @@
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef>Nombre</th>
   
-      <td mat-cell *matCellDef="let student">
-        {{ student | fullname }}
+      <td mat-cell *matCellDef="let course">
+        {{ course.nombre }}
       </td>
     </ng-container>
 
-    <!-- Email  Column -->
-    <ng-container matColumnDef="email">
-        <th mat-header-cell *matHeaderCellDef>Email</th>
-    
-        <td mat-cell *matCellDef="let student">
-          {{ student.email }}
-        </td>
-      </ng-container>
-  
     <!-- Start Date Column -->
-    <!-- <ng-container matColumnDef="startDate">
+    <ng-container matColumnDef="fechainicio">
       <th mat-header-cell *matHeaderCellDef>Fecha de inicio</th>
   
       <td mat-cell *matCellDef="let course">
-        {{ course.startDate | date : "dd/MM/YYYY" }}
+        {{ course.fecha_inicio | date : "dd/MM/YYYY" }}
       </td>
-    </ng-container> -->
+    </ng-container>
     <!-- End Date Column -->
-    <!-- <ng-container matColumnDef="endDate">
+    <ng-container matColumnDef="fechafin">
       <th mat-header-cell *matHeaderCellDef>Fecha de fin</th>
   
       <td mat-cell *matCellDef="let course">
-        {{ course.endDate | date : "dd/MM/YYYY" }}
+        {{ course.fecha_fin | date : "dd/MM/YYYY" }}
       </td>
-    </ng-container> -->
+    </ng-container>
   
     <!-- Actions Column -->
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef>Acciones</th>
   
-      <td mat-cell *matCellDef="let student">
-        <button [routerLink]="student.id" mat-icon-button color="accent" disabled>
+      <td mat-cell *matCellDef="let course">
+        <button [routerLink]="course.id" mat-icon-button color="accent" disabled>
           <mat-icon>visibility</mat-icon>
         </button>
   
         <button
-          (click)="deleteCourse.emit(student.id)"
+          (click)="deleteCourse.emit(course.id)"
           mat-icon-button
           color="warn"
         >
@@ -64,7 +55,7 @@
         </button>
   
         <button
-          (click)="editCourse.emit(student.id)"
+          (click)="editCourse.emit(course.id)"
           mat-icon-button
           color="primary"
         >
