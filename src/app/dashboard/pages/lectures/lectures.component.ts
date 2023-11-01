@@ -15,11 +15,7 @@ export class LecturesComponent {
   lectures$: Observable<any>;
 
   constructor(private lectureService: LectureService, private matDialog: MatDialog){
-    
-    
     this.lectures$ = this.lectureService.getLectures();
-    this.lectures$.subscribe(data => console.log(data)); // Agregar este console.log
-    console.log(this.lectures$);
   }
 
   
