@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, Observable , map} from 'rxjs';
 import { User } from '../models/user';
 import { LoginPayload } from '../models/login';
+import { RegisterPayload } from '../models/register';
 
 @Injectable({
   providedIn: 'root'
@@ -47,6 +48,40 @@ export class AuthService {
         },
       });
   }
+  register(payload: RegisterPayload): void {
+    this.httpClient
+      .post<User>(
+        `${this.apiUrl}/users`,
+        {
+          email: payload.email,
+          password: payload.password,
+          name: payload.name,
+          lastname: payload.lastname,
+          token: payload.token
+        }
+      )
+      .subscribe({
+        next: (authUser) => {
+          this._authUser$.next(authUser);
+          alert('Usuario creado');
+          this.router.navigate(['/auth/login']);
+        },
+        error: (err) => {
+          alert('Error al registrar usuario');
+        },
+      });
+  }
+  
+  // "name": "Bernadette",
+  // "lastname": "Johns",
+  // "email": "Ned31@gmail.com",
+  // "password": "1gehMIgQB5SLvXO",
+  // "token": "tvVDmdIuraGJfrH",
+  // "createdAt": "2023-11-08T11:11:21.828Z",
+  // "updatedAt": 1699479118,
+  // "deletedAt": 1699479118,
+  // "id": "1"
+  
 
   verifyToken(): Observable<boolean> {
     return this.httpClient

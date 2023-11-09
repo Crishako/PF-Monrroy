@@ -11,8 +11,18 @@
       <input formControlName="password" matInput type="password" />
     </mat-form-field>
   </div>
-
-  <button (click)="login()" mat-flat-button style="background-color: #01783f; color: white;">
-    Iniciar sesión
-  </button>
+  <div class="row justify-content-between">
+    <div class="col-auto">
+        <button (click)="login()" mat-flat-button style="background-color: #01783f; color: white;">
+            Iniciar sesión
+        </button>
+    </div>
+  
+    <div class="col-auto text-end">
+      <p class="text-end">¿No tienes una cuenta?</p>
+      <button mat-raised-button color="primary" routerLink="/auth/register">
+        Regístrate
+      </button>
+    </div>
+  </div>
 </form>

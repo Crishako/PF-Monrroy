@@ -11,8 +11,6 @@ export class DashboardComponent {
   constructor(private authService: AuthService) {}
 
   public logOut(){
-    console.log('aah');
-    
     this.authService.logout();
   }
 }
