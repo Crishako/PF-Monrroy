@@ -13,7 +13,10 @@ import { HomeComponent } from './pages/home/home.component';
       children:[
         {
           path: 'home', // /dashboard/home
-          component: HomeComponent,
+          loadChildren: () =>
+            import('./pages/home/home.module').then(
+              (m) => m.HomeModule
+            ),
         },
         {
           path: 'students',
