@@ -8,4 +8,6 @@ import { Component, EventEmitter, Output } from '@angular/core';
 export class ToolbarComponent {
   @Output()
   toggleSidebar = new EventEmitter();
+  @Output()
+  logOut = new EventEmitter();
 }

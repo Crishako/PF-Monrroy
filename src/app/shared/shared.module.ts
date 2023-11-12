@@ -13,11 +13,15 @@ import { FormErrorsPipe } from './pipes/pipes/form-errors.pipe';
 import {MatButtonModule} from '@angular/material/button';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { FullnamePipe } from './pipes/pipes/fullname.pipe';
+import { NotificationDialogComponent } from './components/notification-dialog/notification-dialog.component';
+import { NotificationService } from './services/notification.service';
 
 @NgModule({
-  declarations: [FormErrorsPipe, FullnamePipe],
+  declarations: [FormErrorsPipe, FullnamePipe, NotificationDialogComponent],
   imports: [
-    CommonModule
+    CommonModule,
+    MatButtonModule,
+    MatDialogModule,
   ],
   exports:[
     MatTableModule,
@@ -32,7 +36,8 @@ import { FullnamePipe } from './pipes/pipes/fullname.pipe';
     FormErrorsPipe,
     MatToolbarModule,
     MatButtonModule,
-    FullnamePipe
+    FullnamePipe,
+    NotificationDialogComponent
   ]
 })
 export class SharedModule { }

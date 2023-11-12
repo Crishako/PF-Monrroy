@@ -1,7 +1,10 @@
-<mat-toolbar color="primary">
+<mat-toolbar class="d-flex align-items-center" color="primary">
     <button mat-icon-button (click)="toggleSidebar.emit()">
       <mat-icon>menu</mat-icon>
     </button>
     <span>Mi escuela Cristian Monrroy</span>
+    <button class="ms-auto" mat-icon-button color="warn" (click)="logOut.emit()">
+      <mat-icon>logout</mat-icon>
+    </button>
   </mat-toolbar>
   

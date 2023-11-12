@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from '../auth/services/auth.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,4 +8,9 @@ import { Component } from '@angular/core';
 })
 export class DashboardComponent {
   public isSidenavOpen = false;
+  constructor(private authService: AuthService) {}
+
+  public logOut(){
+    this.authService.logout();
+  }
 }
