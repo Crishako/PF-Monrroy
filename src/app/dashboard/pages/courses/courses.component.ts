@@ -45,15 +45,21 @@ export class CoursesComponent {
   
     this.matDialog
       .open(CoursesDialogComponent, {
-        data: { student: courseId, tipo: tipo }
+        data: { course: courseId, tipo: tipo }
       })
       .afterClosed()
       .subscribe({
         next: (result) => {
           if (result) {
-            // Realiza la lógica de eliminación aquí si es necesario
-            this.courses$ = this.coursesService.deleteCourse(courseId);
-            console.log('Curso eliminado:', result);
+            this.coursesService.deleteCourse(courseId).subscribe(
+              (updateCourses) => {
+                this.courses$ = this.coursesService.getCourses();
+                console.log('Curso eliminado:', result);
+              },
+              (error) => {
+                console.error('Error al eliminar Curso', error);
+              }
+            );
           }
         },
       });
@@ -61,17 +67,26 @@ export class CoursesComponent {
   
 
   onEditCourse(course: number): void {
-    let tipo =  'edit';
-    
+    let tipo = 'edit';
+  
     this.matDialog
       .open(CoursesDialogComponent, {
-        data: {course, tipo},
+        data: { course: course, tipo },
       })
       .afterClosed()
       .subscribe({
         next: (result) => {
           if (!!result) {
-            this.courses$ = this.coursesService.editCourse$(course, result);
+            this.coursesService.editCourse$(course, result).subscribe(
+              (updateCourses) => {
+                // Actualiza la tabla con la nueva lista de estudiantes después de la edición.
+                this.courses$ = this.coursesService.getCourses();
+              },
+              (error) => {
+                // Maneja el error si es necesario.
+                console.error('Error al editar curso', error);
+              }
+            );
           }
         },
       });
