@@ -1,4 +1,3 @@
-import { Course } from "./course";
 export interface Student {
   id: number;
   nombre: string;
@@ -6,7 +5,7 @@ export interface Student {
   edad: number;
   genero: string;
   email: string;
-  cursos: Course[];
+  cursos: [] | null;
 }
 
 

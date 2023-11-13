@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable,map, of} from 'rxjs';
+import { BehaviorSubject, Observable,catchError,map, of, tap} from 'rxjs';
 import { Course } from 'src/app/dashboard/models/course';
 import { Student } from 'src/app/dashboard/models/student';
 
@@ -9,15 +9,21 @@ import { Student } from 'src/app/dashboard/models/student';
 })
 export class StudentService {
 
+  private _student$ = new BehaviorSubject<Student | null>(null);
+
+  public student$ = this._student$.asObservable();
+
+  private apiUrl = "https://654bf2e15b38a59f28eff3b9.mockapi.io/api/v1";
+
   constructor(private http: HttpClient) { }
 
   private students: Student[] = [];
   
   getStudents(): Observable<Student[]> {
-    return this.http.get<any>('../../../assets/data/alumnos.json').pipe(
+    return this.http.get<Student[]>(`${this.apiUrl}/students`).pipe(
       map((data) => {
-        if (data && data.alumnos && Array.isArray(data.alumnos)) {
-          this.students = data.alumnos.map((alumno: any) => {
+        if (data ) {
+          this.students = data.map((alumno: Student) => {
             const student: Student = {
               id: alumno.id,
               nombre: alumno.nombre,
@@ -25,32 +31,8 @@ export class StudentService {
               edad: alumno.edad,
               genero: alumno.genero,
               email: alumno.email,
-              cursos: alumno.cursos.map((curso: any) => {
-                const course: Course = {
-                  id: curso.id,
-                  nombre: curso.nombre,
-                  fecha_inicio: curso.fecha_inicio,
-                  fecha_fin: curso.fecha_fin,
-                  descripcion: curso.descripcion,
-                  clases: curso.clases.map((clase: any) => {
-                    return {
-                      id: clase.id,
-                      nombre: clase.nombre,
-                      profesor: clase.profesor,
-                      horario: clase.horario,
-                      descripcion: clase.descripcion,
-                      calificaciones: {
-                        certamen1: clase.calificaciones.certamen1,
-                        certamen2: clase.calificaciones.certamen2,
-                        certamen3: clase.calificaciones.certamen3,
-                        examen: clase.calificaciones.examen,
-                      },
-                    };
-                  }),
-                };
-                return course;
-              }),
-            };
+              cursos: alumno.cursos,
+            }
             return student;
           });
           return this.students
@@ -66,23 +48,55 @@ export class StudentService {
     return of(this.students.find((c) => c.id === id));
   }
 
-  createStudent(payload: Student): Observable<Student[]>{
-    this.students.push(payload);
-    return of([...this.students]);
+  createStudent(payload: Student): Observable<Student> {
+    return this.http
+      .post<Student>(
+        `${this.apiUrl}/students`,
+        {
+          nombre: payload.nombre,
+          apellido: payload.apellido,
+          email: payload.email,
+          genero: payload.genero,
+          edad: payload.edad,
+          cursos: [],
+        }
+      )
+      .pipe(
+        tap((student) => {
+          this._student$.next(student);
+          alert('Usuario creado');
+        }),
+        catchError((err) => {
+          alert('Error al registrar usuario');
+          throw err; 
+        })
+      );
   }
+  
+
+  
 
   deleteStudent(studentId: number): Observable<Student[]> {
-    // Filtramos la lista de estudiantes para eliminar el estudiante con el ID especificado.
-    this.students = this.students.filter((student) => student.id !== studentId);
-
-    // Devuelve la lista de estudiantes actualizada.
-    return of(this.students);
+    // Envía una solicitud DELETE al servidor para eliminar el estudiante con el ID especificado.
+    return this.http
+      .delete<Student[]>(`${this.apiUrl}/students/${studentId}`)
+      .pipe(
+        catchError((err) => {
+          // Puedes manejar el error según tus necesidades
+          throw err;
+        })
+      );
   }
 
 
   editStudent$(id: number, payload: Student): Observable<Student[]> {
-    return of(
-      this.students.map((c) => (c.id === id ? { ...c, ...payload } : c))
-    );
+    return this.http
+      .put<Student[]>(`${this.apiUrl}/students/${id}`, payload)
+      .pipe(
+        catchError((err) => {
+          // Puedes manejar el error según tus necesidades
+          throw err;
+        })
+      );
   }
 }
