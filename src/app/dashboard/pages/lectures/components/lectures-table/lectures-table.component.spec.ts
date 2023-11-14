@@ -1,5 +1,6 @@
+// Import necessary modules
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { MatTableModule } from '@angular/material/table';
 import { LecturesTableComponent } from './lectures-table.component';
 
 describe('LecturesTableComponent', () => {
@@ -8,8 +9,10 @@ describe('LecturesTableComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [LecturesTableComponent]
+      declarations: [LecturesTableComponent],
+      imports: [MatTableModule],
     });
+
     fixture = TestBed.createComponent(LecturesTableComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

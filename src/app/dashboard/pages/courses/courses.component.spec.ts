@@ -1,16 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatTableModule } from '@angular/material/table'; // Asegúrate de importar MatTableModule
 
-import { CoursesComponent } from './courses.component';
+import { CoursesTableComponent } from './components/courses-table/courses-table.component';
 
-describe('CoursesComponent', () => {
-  let component: CoursesComponent;
-  let fixture: ComponentFixture<CoursesComponent>;
+describe('CoursesTableComponent', () => {
+  let component: CoursesTableComponent;
+  let fixture: ComponentFixture<CoursesTableComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [CoursesComponent]
+      declarations: [CoursesTableComponent],
+      imports: [MatTableModule], // Agrega MatTableModule aquí
     });
-    fixture = TestBed.createComponent(CoursesComponent);
+    fixture = TestBed.createComponent(CoursesTableComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

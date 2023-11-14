@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { dashboardGuard } from './core/guards/dashboard.guard';
+import { DashboardGuard,  } from './core/guards/dashboard.guard';
 
 const routes: Routes = [
   {
     path: 'dashboard',
-    canActivate: [dashboardGuard],
+    canActivate: [DashboardGuard],
     loadChildren: () =>
       import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
   },

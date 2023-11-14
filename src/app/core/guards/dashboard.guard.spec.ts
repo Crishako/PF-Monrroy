@@ -1,17 +1,21 @@
 import { TestBed } from '@angular/core/testing';
-import { CanActivateFn } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
+import { DashboardGuard } from './dashboard.guard';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
-import { dashboardGuard } from './dashboard.guard';
-
-describe('dashboardGuard', () => {
-  const executeGuard: CanActivateFn = (...guardParameters) => 
-      TestBed.runInInjectionContext(() => dashboardGuard(...guardParameters));
+describe('DashboardGuard', () => {
+  let guard: DashboardGuard;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      imports: [RouterTestingModule,HttpClientTestingModule],
+      providers: [DashboardGuard],
+    });
+
+    guard = TestBed.inject(DashboardGuard);
   });
 
   it('should be created', () => {
-    expect(executeGuard).toBeTruthy();
+    expect(guard).toBeTruthy();
   });
 });
