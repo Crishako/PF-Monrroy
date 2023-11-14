@@ -22,7 +22,7 @@ describe('LecturesDialogComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('Debe crear LecturesDialogComponent', () => {
     expect(component).toBeTruthy();
   });
 });

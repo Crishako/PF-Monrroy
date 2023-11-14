@@ -17,7 +17,7 @@ describe('StudentsTableComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('Debe crear StudentsTableComponent', () => {
     expect(component).toBeTruthy();
   });
 });

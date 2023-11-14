@@ -15,7 +15,7 @@ describe('DashboardGuard', () => {
     guard = TestBed.inject(DashboardGuard);
   });
 
-  it('should be created', () => {
+  it('Debería ser creado', () => {
     expect(guard).toBeTruthy();
   });
 });

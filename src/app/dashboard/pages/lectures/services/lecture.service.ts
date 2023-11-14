@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, map, of } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, map, of, tap } from 'rxjs';
 import { Lecture } from 'src/app/dashboard/models/lecture';
 
 @Injectable({
@@ -8,41 +8,32 @@ import { Lecture } from 'src/app/dashboard/models/lecture';
 })
 export class LectureService {
 
+  private _lecture$ = new BehaviorSubject<Lecture | null>(null);
+
+  public lecture$ = this._lecture$.asObservable();
+
+  private apiUrl = "https://654bf2e15b38a59f28eff3b9.mockapi.io/api/v1";
+
   constructor(private http: HttpClient) { }
 
   private lectures: Lecture[] = [];
   
   getLectures(): Observable<Lecture[]> {
-    return this.http.get<any>('../../../assets/data/alumnos.json').pipe(
+    return this.http.get<Lecture[]>(`${this.apiUrl}/lectures`).pipe(
       map((data) => {
-        if (data && data.alumnos && Array.isArray(data.alumnos)) {
-          const lectures: Lecture[] = data.alumnos.flatMap((alumno: any) => {
-            if (alumno.cursos && Array.isArray(alumno.cursos)) {
-              return alumno.cursos.flatMap((curso: any) => {
-                if (curso.clases && Array.isArray(curso.clases)) {
-                  return curso.clases.map((clase: any) => {
-                    return {
-                      id: clase.id,
-                      nombre: clase.nombre,
-                      profesor: clase.profesor,
-                      horario: clase.horario,
-                      descripcion: clase.descripcion,
-                      calificaciones: {
-                        certamen1: clase.calificaciones.certamen1,
-                        certamen2: clase.calificaciones.certamen2,
-                        certamen3: clase.calificaciones.certamen3,
-                        examen: clase.calificaciones.examen,
-                      },
-                    };
-                  });
-                }
-                return [];
-              });
+        if (data) {
+          this.lectures = data.map((clase: Lecture) => {
+            const lecture: Lecture = {
+              id: clase.id,
+              nombre: clase.nombre,
+              descripcion: clase.descripcion,
+              profesor: clase.profesor,
+              horario: clase.horario,
+              calificaciones: clase.calificaciones
             }
-            return [];
-          });
-          this.lectures = lectures
-          return lectures;
+            return lecture;
+          }); // Usamos flat para aplanar la matriz de cursos
+            return this.lectures
         } else {
           console.error('Los datos no tienen la estructura esperada.');
           return []; // Devolver una matriz vacía o realizar otro manejo de errores aquí.
@@ -59,23 +50,52 @@ export class LectureService {
     return of(this.lectures.find((c) => c.id === id));
   }
 
-  createLecture(payload: Lecture): Observable<Lecture[]>{
-    this.lectures.push(payload);
-    return of([...this.lectures]);
+  createLecture(payload: Lecture): Observable<Lecture> {
+    return this.http
+      .post<Lecture>(
+        `${this.apiUrl}/lectures`,
+        {
+          nombre: payload.nombre,
+          profesor: payload.profesor,
+          horario: payload.horario,
+          descripcion: payload.descripcion,
+          calificaciones: payload.calificaciones || {},
+        }
+      )
+      .pipe(
+        tap((lecture) => {
+          this._lecture$.next(lecture);
+          alert('Clase creado');
+        }),
+        catchError((err) => {
+          alert('Error al crear la clase');
+          throw err;
+        })
+      );
   }
 
   deleteLecture(lectureId: number): Observable<Lecture[]> {
-    // Filtramos la lista de estudiantes para eliminar el estudiante con el ID especificado.
-    this.lectures = this.lectures.filter((lecture) => lecture.id !== lectureId);
-
-    // Devuelve la lista de estudiantes actualizada.
-    return of(this.lectures);
+    // Envía una solicitud DELETE al servidor para eliminar el estudiante con el ID especificado.
+    return this.http
+      .delete<Lecture[]>(`${this.apiUrl}/lectures/${lectureId}`)
+      .pipe(
+        catchError((err) => {
+          // Puedes manejar el error según tus necesidades
+          throw err;
+        })
+      );
   }
 
 
+  
+
   editLecture$(id: number, payload: Lecture): Observable<Lecture[]> {
-    return of(
-      this.lectures.map((c) => (c.id === id ? { ...c, ...payload } : c))
-    );
+    return this.http
+      .put<Lecture[]>(`${this.apiUrl}/lectures/${id}`, payload)
+      .pipe(
+        catchError((err) => {
+          throw err;
+        })
+      );
   }
 }

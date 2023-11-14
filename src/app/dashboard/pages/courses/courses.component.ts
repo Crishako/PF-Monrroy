@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, map, take } from 'rxjs';
 import { CourseService } from './services/course.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CoursesDialogComponent } from './components/courses-dialog/courses-dialog.component';
+import { Course } from '../../models/course';
 
 @Component({
   selector: 'app-courses',
@@ -18,23 +19,36 @@ export class CoursesComponent {
 
   
   addCourse(): void {
-    let tipo =  'add';
+    let tipo = 'add';
     this.matDialog
-      .open(CoursesDialogComponent,{
-        data:{tipo}
+      .open(CoursesDialogComponent, {
+        data: { tipo }
       })
       .afterClosed()
       .subscribe({
         next: (result) => {
           if (result) {
-            this.courses$ = this.coursesService.createCourse({
-              id:  Math.floor(Math.random() * 100),
+            this.coursesService.createCourse({
+              id: Math.floor(Math.random() * 100),
               nombre: result.nombre,
               fecha_inicio: result.fecha_inicio,
               fecha_fin: result.fecha_fin,
               descripcion: result.descripcion,
-              clases: []
-            });
+              clases: [],
+            }).subscribe(
+              (newCourse) =>{
+                this.courses$ = this.courses$.pipe(
+                  take(1),
+                  map((courses) =>{
+                    const uniqueCourses = [...courses, newCourse].filter(
+                      (course, index, self) =>
+                      index === self.findIndex((c) => c.id ===course.id)
+                    );
+                    return uniqueCourses;
+                  })
+                );
+              }
+            );
           }
         },
       });

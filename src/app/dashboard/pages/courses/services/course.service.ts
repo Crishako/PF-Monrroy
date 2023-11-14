@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Course } from 'src/app/dashboard/models/course';
-import { BehaviorSubject, Observable, catchError, map, of } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, map, of, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -48,10 +48,30 @@ export class CourseService {
     return of(this.courses.find((c) => c.id === id));
   }
 
-  createCourse(payload: Course): Observable<Course[]>{
-    this.courses.push(payload);
-    return of([...this.courses]);
+  createCourse(payload: Course): Observable<Course> {
+    return this.http
+      .post<Course>(
+        `${this.apiUrl}/courses`,
+        {
+          nombre: payload.nombre,
+          fecha_inicio: payload.fecha_inicio,
+          fecha_fin: payload.fecha_fin,
+          descripcion: payload.descripcion,
+          clases: payload.clases || [],
+        }
+      )
+      .pipe(
+        tap((course) => {
+          this._course$.next(course);
+          alert('Curso creado');
+        }),
+        catchError((err) => {
+          alert('Error al crear el curso');
+          throw err;
+        })
+      );
   }
+
 
   deleteCourse(courseId: number): Observable<Course[]> {
     // Envía una solicitud DELETE al servidor para eliminar el estudiante con el ID especificado.

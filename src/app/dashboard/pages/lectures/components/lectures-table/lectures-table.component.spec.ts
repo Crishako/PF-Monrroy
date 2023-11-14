@@ -18,7 +18,7 @@ describe('LecturesTableComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('Debe crear LecturesTableComponent', () => {
     expect(component).toBeTruthy();
   });
 });

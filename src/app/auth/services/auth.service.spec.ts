@@ -28,7 +28,7 @@ describe('AuthService', () => {
     httpController.verify(); // Ensure there are no outstanding requests
   });
 
-  it('Auth Service should be created', () => {
+  it('Auth Service debe ser creado', () => {
     expect(service).toBeTruthy();
   });
 

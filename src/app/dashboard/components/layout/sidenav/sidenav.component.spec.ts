@@ -15,8 +15,8 @@ describe('SidenavComponent', () => {
     TestBed.configureTestingModule({
       declarations: [SidenavComponent],
       imports: [
-        MatSidenavModule, // Include MatSidenavModule
-        MatListModule, // Include MatListModule
+        MatSidenavModule,
+        MatListModule, 
         BrowserAnimationsModule,
         RouterModule,
         RouterTestingModule
@@ -28,7 +28,7 @@ describe('SidenavComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('Debe crear SidenavComponent', () => {
     expect(component).toBeTruthy();
   });
 });

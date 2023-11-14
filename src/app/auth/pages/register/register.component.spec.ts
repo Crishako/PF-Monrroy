@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { ReactiveFormsModule } from '@angular/forms'; // Importa ReactiveFormsModule
-import { AuthService } from '../../services/auth.service';  // Asegúrate de ajustar la ruta correcta
+import { ReactiveFormsModule } from '@angular/forms'; 
+import { AuthService } from '../../services/auth.service'; 
 import { RegisterComponent } from './register.component';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -15,7 +15,7 @@ describe('RegisterComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [RegisterComponent],
-      imports: [ReactiveFormsModule, HttpClientModule, MatFormFieldModule, HttpClientTestingModule, MatInputModule, BrowserAnimationsModule], // Agrega ReactiveFormsModule aquí
+      imports: [ReactiveFormsModule, HttpClientModule, MatFormFieldModule, HttpClientTestingModule, MatInputModule, BrowserAnimationsModule], 
       providers: [AuthService],
     });
     fixture = TestBed.createComponent(RegisterComponent);
@@ -23,7 +23,7 @@ describe('RegisterComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('Debe crear RegisterComponent', () => {
     expect(component).toBeTruthy();
   });
 });

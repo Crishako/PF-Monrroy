@@ -1,3 +1,4 @@
+<ng-container *ngIf="dataSource && dataSource.length > 0; else noData">
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
     <!--- Note that these columns can be defined in any order.
           The actual rendered columns are set as a property on the row definition" -->
@@ -66,5 +67,11 @@
   
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-  </table>
+</table>
+</ng-container>
   
+<ng-template #noData>
+  <mat-card>
+    <mat-card-content class="d-flex justify-content-center">No hay cursos ingresados aun.</mat-card-content>
+  </mat-card>
+</ng-template>
