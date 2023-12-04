@@ -68,10 +68,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "PF-Monrroy:build:production"
+              "buildTarget": "PF-Monrroy:build:production"
             },
             "development": {
-              "browserTarget": "PF-Monrroy:build:development"
+              "buildTarget": "PF-Monrroy:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -79,7 +79,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "PF-Monrroy:build"
+            "buildTarget": "PF-Monrroy:build"
           }
         },
         "test": {
