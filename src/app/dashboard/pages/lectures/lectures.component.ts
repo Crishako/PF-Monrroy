@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, map, take } from 'rxjs';
 import { LectureService } from './services/lecture.service';
 import { MatDialog } from '@angular/material/dialog';
 import { LecturesDialogComponent } from './components/lectures-dialog/lectures-dialog.component';
@@ -20,28 +20,41 @@ export class LecturesComponent {
 
   
   addLecture(): void {
-    let tipo =  'add';
+    let tipo = 'add';
     this.matDialog
-      .open(LecturesDialogComponent,{
-        data:{tipo}
+      .open(LecturesDialogComponent, {
+        data: { tipo }
       })
       .afterClosed()
       .subscribe({
         next: (result) => {
           if (result) {
-            this.lectures$ = this.lectureService.createLecture({
-              id:  Math.floor(Math.random() * 100),
+            this.lectureService.createLecture({
+              id: Math.floor(Math.random() * 100),
               nombre: result.nombre,
-              profesor: result.fecha_inicio,
-              horario: result.fecha_fin,
+              profesor: result.profesor,
+              horario: result.horario,
               descripcion: result.descripcion,
               calificaciones: {
-                certamen1: Math.floor(Math.random() * 100),
-                certamen2: Math.floor(Math.random() * 100),
-                certamen3: Math.floor(Math.random() * 100),
-                examen: Math.floor(Math.random() * 100),
+                certamen1: 0,
+                certamen2: 0,
+                certamen3: 0,
+                examen: 0,
+              },
+            }).subscribe(
+              (newLecture) =>{
+                this.lectures$ = this.lectures$.pipe(
+                  take(1),
+                  map((lectures) =>{
+                    const uniqueLectures = [...lectures, newLecture].filter(
+                      (lecture, index, self) =>
+                      index === self.findIndex((l) => l.id ===lecture.id)
+                    );
+                    return uniqueLectures;
+                  })
+                );
               }
-            });
+            );
           }
         },
       });
@@ -58,30 +71,44 @@ export class LecturesComponent {
       .subscribe({
         next: (result) => {
           if (result) {
-            // Realiza la lógica de eliminación aquí si es necesario
-            this.lectures$ = this.lectureService.deleteLecture(lectureId);
-            console.log('Clase eliminada:', result);
+            this.lectureService.deleteLecture(lectureId).subscribe(
+              (updateLectures) => {
+                this.lectures$ = this.lectureService.getLectures();
+                console.log('Clase eliminada:', result);
+              },
+              (error) => {
+                console.error('Error al eliminar Clase', error);
+              }
+            );
           }
         },
       });
   }
   
 
+
   onEditLecture(lecture: number): void {
-    let tipo =  'edit';
-    
+    let tipo = 'edit';
+  
     this.matDialog
       .open(LecturesDialogComponent, {
-        data: {lecture, tipo},
+        data: { lecture, tipo },
       })
       .afterClosed()
       .subscribe({
         next: (result) => {
           if (!!result) {
-            this.lectures$ = this.lectureService.editLecture$(lecture, result);
+            this.lectureService.editLecture$(lecture, result).subscribe(
+              (updateLectures) => {
+                // Actualiza la tabla con la nueva lista de estudiantes después de la edición.
+                this.lectures$ = this.lectureService.getLectures();
+              },
+              (error) => {
+                console.error('Error al editar clase', error);
+              }
+            );
           }
         },
       });
   }
-
 }

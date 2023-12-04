@@ -1,17 +1,22 @@
-import { CanActivateFn, Router } from '@angular/router';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/services/auth.service';
-import { map } from 'rxjs';
-import { inject } from '@angular/core';
+import { Injectable } from '@angular/core';
+import { Observable, map } from 'rxjs';
 
-export const dashboardGuard: CanActivateFn = (route, state) => {
-  const router = inject(Router);
-  const authService = inject(AuthService);
+@Injectable({
+  providedIn: 'root',
+})
+export class DashboardGuard implements CanActivate {
+  constructor(private authService: AuthService, private router: Router) {}
 
-  return authService
-    .verifyToken()
-    .pipe(
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Observable<boolean | UrlTree> {
+    return this.authService.verifyToken().pipe(
       map((isAuthenticated) =>
-        isAuthenticated ? true : router.createUrlTree(['/auth/login'])
+        isAuthenticated ? true : this.router.createUrlTree(['/auth/login'])
       )
     );
-};
+  }
+}

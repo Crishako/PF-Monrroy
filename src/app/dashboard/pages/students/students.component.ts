@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, map, take } from 'rxjs';
 import { StudentService } from './services/student.service';
 import { MatDialog } from '@angular/material/dialog';
 import { StudentsDialogComponent } from './components/students-dialog/students-dialog.component';
@@ -18,28 +18,43 @@ export class StudentsComponent {
   }
 
   addStudent(): void {
-    let tipo =  'add';
+    let tipo = 'add';
     this.matDialog
-      .open(StudentsDialogComponent,{
-        data:{tipo}
+      .open(StudentsDialogComponent, {
+        data: { tipo }
       })
       .afterClosed()
       .subscribe({
         next: (result) => {
           if (result) {
-            this.students$ = this.studentService.createStudent({
-              id:  Math.floor(Math.random() * 100),
+            this.studentService.createStudent({
+              id: Math.floor(Math.random() * 100),
               nombre: result.nombre,
               apellido: result.apellido,
               edad: result.edad,
               genero: result.genero,
               email: result.email,
               cursos: []
-            });
+            }).subscribe(
+              (newStudent) => {
+                this.students$ = this.students$.pipe(
+                  take(1),
+                  map((students) => {
+                    const uniqueStudents = [...students, newStudent].filter(
+                      (student, index, self) =>
+                        index === self.findIndex((s) => s.id === student.id)
+                    );
+                    return uniqueStudents;
+                  })
+                );
+              }
+            );
           }
         },
       });
   }
+  
+  
 
   onDeleteStudent(studentId: number): void {
     const tipo = 'delete';
@@ -52,30 +67,48 @@ export class StudentsComponent {
       .subscribe({
         next: (result) => {
           if (result) {
-            // Realiza la lógica de eliminación aquí si es necesario
-            this.students$ = this.studentService.deleteStudent(studentId);
-            console.log('Estudiante eliminado:', result);
+            // Llama al servicio para realizar la eliminación
+            this.studentService.deleteStudent(studentId).subscribe(
+              (updatedStudents) => {
+                // Actualiza la tabla con la nueva lista de estudiantes después de la eliminación.
+                this.students$ = this.studentService.getStudents();
+                console.log('Estudiante eliminado:', result);
+              },
+              (error) => {
+                // Maneja el error si es necesario.
+                console.error('Error al eliminar estudiante', error);
+              }
+            );
           }
         },
       });
   }
-  
 
-  onEditStudent(student: number): void {
-    let tipo =  'edit';
-    
+  onEditStudent(studentId: number): void {
+    let tipo = 'edit';
+  
     this.matDialog
       .open(StudentsDialogComponent, {
-        data: {student, tipo},
+        data: { student: studentId, tipo },
       })
       .afterClosed()
       .subscribe({
         next: (result) => {
           if (!!result) {
-            this.students$ = this.studentService.editStudent$(student, result);
+            this.studentService.editStudent$(studentId, result).subscribe(
+              (updatedStudents) => {
+                // Actualiza la tabla con la nueva lista de estudiantes después de la edición.
+                this.students$ = this.studentService.getStudents();
+              },
+              (error) => {
+                // Maneja el error si es necesario.
+                console.error('Error al editar estudiante', error);
+              }
+            );
           }
         },
       });
   }
+  
 
 }
