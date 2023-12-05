@@ -7,3 +7,8 @@ export interface User {
     token: string; // Puedes ajustar el tipo de token según la estructura real
     role: string;
   }
+
+export interface UserPayload {
+  courseId: number | null;
+  userId: number | null;
+}

@@ -11,6 +11,7 @@ import { StoreModule } from '@ngrx/store';
 import { CounterComponent } from './counter/counter.component';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { appReducer } from './auth/store';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { appReducer } from './auth/store';
     CoreModule,
     MatNativeDateModule,
     StoreModule.forRoot(appReducer, {}),
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() })
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
+    EffectsModule.forRoot([])
   ],
   providers: [],
   bootstrap: [AppComponent]

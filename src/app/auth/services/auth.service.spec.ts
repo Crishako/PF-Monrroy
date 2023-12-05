@@ -34,27 +34,27 @@ describe('AuthService', () => {
 
   it('Debe establecer un usuario autenticado al hacer login()', () => {
     const USER_MOCK: User = {
-      id: '1',
+      id: 1, // Cambiado de '1' a 1
       email: 'fake@mail.com',
       lastname: 'fakeLastName',
       name: 'fakeName',
       token: '84jfdskfsdjh3m2nudisfdusafjd',
       password: '123456',
-      createdAt: '2023-11-12T03:25:21.067Z',
+      role: 'ADMIN'
     };
-
+  
     service.login({
       email: USER_MOCK.email,
       password: USER_MOCK.password,
     });
-
+  
     const req = httpController.expectOne({
       method: 'GET',
       url: `${apiUrl}/users?email=${USER_MOCK.email}&password=${USER_MOCK.password}`,
     });
-
+  
     req.flush([USER_MOCK]);
-
+  
     service.authUser$.subscribe({
       next: (authUser) => {
         expect(authUser).toBeTruthy();
@@ -62,4 +62,5 @@ describe('AuthService', () => {
       },
     });
   });
+  
 });

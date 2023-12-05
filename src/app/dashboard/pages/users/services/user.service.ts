@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable, catchError, map, of, tap } from 'rxjs';
 import { User } from 'src/app/auth/models/user';
 import { StudentService } from '../../students/services/student.service';
 import { Student } from 'src/app/dashboard/models/student';
+import { Store } from '@ngrx/store';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class UserService {
 
   private apiUrl = "https://654bf2e15b38a59f28eff3b9.mockapi.io/api/v1";
 
-  constructor(private http: HttpClient, private studentService: StudentService) { }
+  constructor(private http: HttpClient, private studentService: StudentService, private store: Store) { }
 
   private users: User[] = [];
 
@@ -120,9 +121,9 @@ export class UserService {
   }
 
 
-  editUser$(id: number, payload: User): Observable<User[]> {
+  editUser$(id: number, payload: User): Observable<User> {
     return this.http
-      .put<User[]>(`${this.apiUrl}/users/${id}`, payload)
+      .put<User>(`${this.apiUrl}/users/${id}`, payload)
       .pipe(
         catchError((err) => {
           // Puedes manejar el error según tus necesidades
@@ -130,4 +131,5 @@ export class UserService {
         })
       );
   }
+  
 }

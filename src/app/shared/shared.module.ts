@@ -13,6 +13,9 @@ import { FormErrorsPipe } from './pipes/pipes/form-errors.pipe';
 import {MatButtonModule} from '@angular/material/button';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { FullnamePipe } from './pipes/pipes/fullname.pipe';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatListModule } from '@angular/material/list';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 
 @NgModule({
@@ -36,7 +39,10 @@ import { FullnamePipe } from './pipes/pipes/fullname.pipe';
     FormErrorsPipe,
     MatToolbarModule,
     MatButtonModule,
-    FullnamePipe
+    FullnamePipe,
+    MatDividerModule,
+    MatListModule,
+    MatProgressSpinnerModule
   ]
 })
 export class SharedModule { }

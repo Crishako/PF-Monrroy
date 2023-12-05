@@ -1,8 +1,8 @@
 <h1 mat-dialog-title>
-    {{ isEditing ? "Editando Usuario" : isDeleting ? "Eliminando Usuario" : "Agregando Usuario" }}
+    {{ isEditing ? "Editando Usuario" : isDeleting ? "Eliminando Usuario" : isDetails ? "Detalles usuario" : "Agregando Usuario" }}
   </h1>
   
-  <div mat-dialog-content>
+  <div mat-dialog-content  [ngClass]="{'details-content': isDetails}">
     <!-- Contenido... -->
   
     <ng-container *ngIf="isEditing || isAdding">
@@ -65,18 +65,49 @@
     <ng-container *ngIf="isDeleting">
       <p>¿Está seguro de que desea eliminar este usuario?</p>
     </ng-container>
+
+    <ng-container *ngIf="isDetails">
+        <div class="row">
+            <div class="d-flex justify-content-between typo">
+                <span >Nombre:</span>
+                <span >{{ userForm.get('name')?.value }}</span>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="d-flex justify-content-between typo">
+                <span >Apellido:</span>
+                <span >{{ userForm.get('lastname')?.value }}</span>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="d-flex justify-content-between typo">
+                <span >Email:</span>
+                <span >{{ userForm.get('email')?.value }}</span>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="d-flex justify-content-between typo">
+                <span >Rol:</span>
+                <span >{{ userForm.get('role')?.value }}</span>
+            </div>
+        </div>
+    </ng-container>
+      
+      
   </div>
   
   <div mat-dialog-actions>
     
-    <ng-container *ngIf="isEditing || isDeleting">
-      <button mat-dialog-close mat-button>Cancelar</button>
-      <button mat-button (click)="onSubmit()">{{ isEditing ? "Guardar" : "Eliminar" }}</button>
-    </ng-container>
-  
-    <ng-container *ngIf="!isEditing && !isDeleting">
-      <button mat-dialog-close mat-button>Cancelar</button>
-      <button (click)="onSubmit()" mat-button>{{ isEditing ? "Guardar" : "Agregar" }}</button>
-    </ng-container>
+    <ng-container *ngIf="isDetails">
+        <button mat-dialog-close mat-button>Cancelar</button>
+      </ng-container>
+      
+      <ng-container *ngIf="isEditing || isDeleting">
+        <button mat-dialog-close mat-button>Cancelar</button>
+        <button mat-button (click)="onSubmit()">{{ isEditing ? "Guardar" : "Eliminar" }}</button>
+      </ng-container>
+      
+      <ng-container *ngIf="!isEditing && !isDeleting && !isDetails">
+        <button mat-dialog-close mat-button>Cancelar</button>
+        <button (click)="onSubmit()" mat-button>{{ isEditing ? "Guardar" : "Agregar" }}</button>
+      </ng-container>
+      
   </div>
   
