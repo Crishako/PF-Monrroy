@@ -4,5 +4,6 @@ export interface RegisterPayload {
     name: string | null;
     lastname: string | null;
     token: string | null;
+    role: string | null;
   }
   

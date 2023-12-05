@@ -33,6 +33,13 @@ import { HomeComponent } from './pages/home/home.component';
             ),
         },
         {
+          path: 'users',
+          loadChildren: () =>
+            import('./pages/users/users.module').then(
+              (m) => m.UsersModule
+            ),
+        },
+        {
           path: 'lectures',
           loadChildren: () =>
             import('./pages/lectures/lectures.module').then(

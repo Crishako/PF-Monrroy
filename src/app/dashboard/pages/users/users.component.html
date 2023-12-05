@@ -1,0 +1,14 @@
+<h1 appFontSize20>Usuarios</h1>
+
+<div class="d-flex justify-content-end mb-3">
+  <button (click)="addUser()" mat-flat-button color="primary">
+    Agregar usuario
+  </button>
+</div>
+
+<app-users-table
+  [dataSource]="(users$ | async) || []"
+  (deleteUser)="onDeleteUser($event)"
+  (editUser)="onEditUser($event)"
+></app-users-table>
+

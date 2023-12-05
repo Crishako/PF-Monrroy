@@ -17,6 +17,7 @@ export class RegisterComponent {
   nameControl = new FormControl('', [Validators.required]);
   lastNameControl = new FormControl('', [Validators.required]);
   tokenControl = new FormControl(this.generateRandomToken(), [Validators.required]);
+  roleControl = new FormControl('DIRECTOR',[Validators.required]);
 
   registerForm = new FormGroup({
     email: this.emailControl,
@@ -24,6 +25,7 @@ export class RegisterComponent {
     name: this.nameControl,
     lastName: this.lastNameControl,
     token: this.tokenControl,
+    role: this.roleControl
   });
 
   constructor(private authService: AuthService, private router: Router) {}
@@ -39,6 +41,7 @@ export class RegisterComponent {
         name: this.registerForm.get('name')?.value || null,
         lastname: this.registerForm.get('lastName')?.value || null,
         token: this.registerForm.get('token')?.value || null,
+        role: this.registerForm.get('role')?.value || null
       };
 
       this.authService.register(registerPayload);

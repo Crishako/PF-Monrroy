@@ -66,10 +66,10 @@ export class StudentService {
       .pipe(
         tap((student) => {
           this._student$.next(student);
-          alert('Usuario creado');
+          alert('Alumno creado');
         }),
         catchError((err) => {
-          alert('Error al registrar usuario');
+          alert('Error al registrar alumno');
           throw err; 
         })
       );

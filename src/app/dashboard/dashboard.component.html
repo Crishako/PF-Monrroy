@@ -9,8 +9,8 @@
 <!-- Crea un contenedor de página con Bootstrap Grid -->
 <app-toolbar (toggleSidebar)="isSidenavOpen = !isSidenavOpen" (logOut)="logOut()"></app-toolbar>
 <mat-drawer-container class="example-container">
-    <mat-drawer mode="side" class="dashboard-sidebar" [opened]="isSidenavOpen" color="primary">
-        <app-sidenav></app-sidenav>
+    <mat-drawer mode="side" class="dashboard-sidebar"  [opened]="isSidenavOpen" color="primary">
+        <app-sidenav (logOut)="logOut()"></app-sidenav>
     </mat-drawer>
     <mat-drawer-content class="row">
       <div class="col-12 p-5">

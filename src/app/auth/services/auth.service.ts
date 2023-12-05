@@ -67,7 +67,8 @@ export class AuthService {
           password: payload.password,
           name: payload.name,
           lastname: payload.lastname,
-          token: payload.token
+          token: payload.token,
+          role: payload.role
         }
       )
       .subscribe({
