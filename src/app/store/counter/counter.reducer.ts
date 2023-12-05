@@ -1,28 +1,36 @@
 import { createReducer, on } from "@ngrx/store";
 import { CounterActions } from "./counter.actions";
 
-interface  CounterState{
+export const counterFeatureName = 'counter';
+
+export interface  CounterState{
     value:number;
+    a: string;
+    b: string;
+    c: string;
 }
 
 const initialState: CounterState = {
-    value: 0
+    value: 0,
+    a: 'a',
+    b: 'b',
+    c: 'c',
 }
 
 export const reducer = createReducer(
     initialState, 
     //Cuando llegue una acción de tipo sumar crea el nuevo estado:
-    on(CounterActions.sumar, (state) =>{
+    on(CounterActions.sumar, (state ,{cantidad}) =>{
         return{
             ...state,
-            value: state.value + 1,
+            value: state.value + cantidad,
         }
     }),
 
-    on(CounterActions.restar, (state) =>{
+    on(CounterActions.restar, (state, {cantidad}) =>{
         return{
             ...state,
-            value: state.value - 1,
+            value: state.value - cantidad,
         }
     })
 );

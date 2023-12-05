@@ -1,5 +1,5 @@
 <h1>
-    10
+    {{counterValue$ | async}}
 </h1>
-<button>-</button>
-<button>+</button>
+<button (click)="restar()">-</button>
+<button (click)="sumar()">+</button>
