@@ -17,6 +17,14 @@ export class CoursesComponent {
     this.courses$ = this.coursesService.getCourses();
   }
 
+  onDetails(courseId:number):void{
+    const tipo = 'details';
+  
+    this.matDialog
+      .open(CoursesDialogComponent, {
+        data: { course: courseId, tipo: tipo }
+      })
+  }
   
   addCourse(): void {
     let tipo = 'add';
@@ -68,7 +76,6 @@ export class CoursesComponent {
             this.coursesService.deleteCourse(courseId).subscribe(
               (updateCourses) => {
                 this.courses$ = this.coursesService.getCourses();
-                console.log('Curso eliminado:', result);
               },
               (error) => {
                 console.error('Error al eliminar Curso', error);

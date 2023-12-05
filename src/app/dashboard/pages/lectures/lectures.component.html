@@ -12,4 +12,5 @@
   [dataSource]="(lectures$ | async) || []"
   (deleteLecture)="onDeleteLecture($event)"
   (editLecture)="onEditLecture($event)"
+  (detailsLecture)="onDetails($event)"
 ></app-lectures-table> 

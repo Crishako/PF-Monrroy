@@ -16,6 +16,7 @@ export class StudentsDialogComponent {
   edadControl = new FormControl();
   generoControl = new FormControl();
   emailControl = new FormControl();
+  cursosControl = new FormControl();
 
   studentForm = new FormGroup({
     nombre: this.nombreControl,
@@ -23,6 +24,7 @@ export class StudentsDialogComponent {
     edad: this.edadControl,
     genero: this.generoControl,
     email: this.emailControl,
+    cursos: this.cursosControl
   });
 
 constructor(
@@ -56,6 +58,11 @@ public get isDeleting(): boolean {
 public get isAdding(): boolean {
   return this.data.tipo === 'add';
 }
+
+public get isDetails(): boolean {
+  return this.data.tipo === 'details';
+}
+
 
 
 

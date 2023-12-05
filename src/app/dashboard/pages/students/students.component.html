@@ -10,6 +10,7 @@
   [dataSource]="(students$ | async) || []"
   (deleteCourse)="onDeleteStudent($event)"
   (editCourse)="onEditStudent($event)"
+  (detailsStudent)="onDetails($event)"
 ></app-students-table>
 
 

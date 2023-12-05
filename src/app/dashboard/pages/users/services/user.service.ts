@@ -95,8 +95,6 @@ export class UserService {
     // Llama al servicio createStudent de StudentService
     this.studentService.createStudent(payload).subscribe(
       (student) => {
-        // Manejar el éxito si es necesario
-        console.log(student);
         
       },
       (error) => {

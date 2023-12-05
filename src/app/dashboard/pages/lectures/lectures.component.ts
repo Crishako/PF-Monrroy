@@ -18,6 +18,14 @@ export class LecturesComponent {
     this.lectures$ = this.lectureService.getLectures();
   }
 
+  onDetails(lectureId:number):void{
+    const tipo = 'details';
+  
+    this.matDialog
+      .open(LecturesDialogComponent, {
+        data: { lecture: lectureId, tipo: tipo }
+      })
+  }
   
   addLecture(): void {
     let tipo = 'add';
@@ -74,10 +82,8 @@ export class LecturesComponent {
             this.lectureService.deleteLecture(lectureId).subscribe(
               (updateLectures) => {
                 this.lectures$ = this.lectureService.getLectures();
-                console.log('Clase eliminada:', result);
               },
               (error) => {
-                console.error('Error al eliminar Clase', error);
               }
             );
           }

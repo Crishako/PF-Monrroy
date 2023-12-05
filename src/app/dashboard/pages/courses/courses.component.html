@@ -11,4 +11,5 @@
   [dataSource]="(courses$ | async) || []"
   (deleteCourse)="onDeleteCourse($event)"
   (editCourse)="onEditCourse($event)"
+  (detailsCourse)="onDetails($event)"
 ></app-courses-table>

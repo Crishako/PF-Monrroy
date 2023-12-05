@@ -49,11 +49,9 @@ export class UsersTableComponent {
               (updatedStudents) => {
                 // Actualiza la tabla con la nueva lista de estudiantes después de la eliminación.
                 this.users$ = this.userService.getUsers();
-                console.log('Usuario eliminado:', result);
               },
               (error) => {
                 // Maneja el error si es necesario.
-                console.error('Error al eliminar usuario', error);
               }
             );
           }

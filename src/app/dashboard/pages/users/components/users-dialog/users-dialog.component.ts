@@ -40,12 +40,6 @@ constructor(
   // RECIBO LA DATA (Student)
   @Inject(MAT_DIALOG_DATA) public data:{user:number, tipo:string}
 ) {
-
-  this.action$
-      .pipe(ofType(loadUsers), take(1))
-      .subscribe({
-        next: () => this.matDialogRef.close(),
-      });
   if (data.user) {
     this.userService.getUserById$(data.user).subscribe({
       next: (u) =>{

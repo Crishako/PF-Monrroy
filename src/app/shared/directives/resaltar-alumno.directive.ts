@@ -11,7 +11,6 @@ export class ResaltarAlumnoDirective {
 
   ngOnInit() {
     const promedio = (this.calificaciones.matematicas + this.calificaciones.historia + this.calificaciones.ciencias) / 3;
-    console.log(promedio);
     
     if (promedio >= 90) {
       this.el.nativeElement.style.backgroundColor = 'green';

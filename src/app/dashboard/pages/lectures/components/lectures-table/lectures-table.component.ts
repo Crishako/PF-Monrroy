@@ -16,5 +16,8 @@ export class LecturesTableComponent {
   @Output()
   deleteLecture = new EventEmitter();
 
+  @Output()
+  detailsLecture = new EventEmitter();
+
   displayedColumns = ['id', 'name', 'profesor', 'horario', 'actions'];
 }

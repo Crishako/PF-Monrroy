@@ -1,5 +1,5 @@
 <h1 mat-dialog-title>
-    {{ isEditing ? "Editando Clase" : isDeleting ? "Eliminando Clase" : "Agregando Clase" }}
+    {{ isEditing ? "Editando Clase" : isDeleting ? "Eliminando Clase" : isDetails ? "Detalles Clase" : "Agregando Clase" }}
   </h1>
   
   <div mat-dialog-content>
@@ -52,6 +52,31 @@
       </form>
     </ng-container>
     
+    <ng-container *ngIf="isDetails">
+      <div class="row">
+          <div class="d-flex justify-content-between typo">
+              <span >Nombre:</span>
+              <span >{{ lectureForm.get('nombre')?.value }}</span>
+          </div>
+          <mat-divider></mat-divider>
+          <div class="d-flex justify-content-between typo">
+              <span >Profesor:</span>
+              <span >{{ lectureForm.get('profesor')?.value }}</span>
+          </div>
+          <mat-divider></mat-divider>
+          <div class="d-flex justify-content-between typo">
+              <span >Horario:</span>
+              <span >{{ lectureForm.get('horario')?.value }}</span>
+          </div>
+          <mat-divider></mat-divider>
+          <div class="d-flex justify-content-between typo">
+              <span >Descripcion:</span>
+              <span>{{ lectureForm.get('descripcion')?.value || 'No hay descripción ingresada.' }}</span>
+
+          </div>
+      </div>
+    </ng-container>
+
     <ng-container *ngIf="isDeleting">
       <p>¿Está seguro de que desea eliminar esta clase?</p>
     </ng-container>
@@ -59,12 +84,16 @@
   
   <div mat-dialog-actions>
     
+    <ng-container *ngIf="isDetails">
+      <button mat-dialog-close mat-button>Cancelar</button>
+    </ng-container>
+    
     <ng-container *ngIf="isEditing || isDeleting">
       <button mat-dialog-close mat-button>Cancelar</button>
       <button mat-button (click)="onSubmit()">{{ isEditing ? "Guardar" : "Eliminar" }}</button>
     </ng-container>
-  
-    <ng-container *ngIf="!isEditing && !isDeleting">
+    
+    <ng-container *ngIf="!isEditing && !isDeleting && !isDetails">
       <button mat-dialog-close mat-button>Cancelar</button>
       <button (click)="onSubmit()" mat-button>{{ isEditing ? "Guardar" : "Agregar" }}</button>
     </ng-container>

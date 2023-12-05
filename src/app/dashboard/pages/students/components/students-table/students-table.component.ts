@@ -7,11 +7,16 @@ import { Student } from 'src/app/dashboard/models/student';
   styleUrls: ['./students-table.component.scss']
 })
 export class StudentsTableComponent {
+
   @Input()
   dataSource: Student[] = [];
 
   @Output()
   editCourse = new EventEmitter();
+
+  @Output()
+  detailsStudent = new EventEmitter();
+
 
   @Output()
   deleteCourse = new EventEmitter();

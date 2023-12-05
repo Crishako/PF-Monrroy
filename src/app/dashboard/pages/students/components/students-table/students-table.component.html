@@ -54,7 +54,7 @@
       <th mat-header-cell *matHeaderCellDef>Acciones</th>
   
       <td mat-cell *matCellDef="let student">
-        <button [routerLink]="student.id" mat-icon-button color="accent" disabled>
+        <button (click)="detailsStudent.emit(student.id)" mat-icon-button color="accent" >
           <mat-icon>visibility</mat-icon>
         </button>
   

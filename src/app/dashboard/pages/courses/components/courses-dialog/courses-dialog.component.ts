@@ -13,12 +13,14 @@ export class CoursesDialogComponent {
   fechainicioControl = new FormControl();
   fechafinControl = new FormControl();
   descripcionControl = new FormControl();
+  lecturesControl = new FormControl();
 
   courseForm = new FormGroup({
     nombre: this.nombreControl,
     fecha_inicio: this.fechainicioControl,
     fecha_fin: this.fechafinControl,
-    descripcion: this.descripcionControl
+    descripcion: this.descripcionControl,
+    lectures: this.lecturesControl,
   });
 constructor(
   private matDialogRef: MatDialogRef<CoursesDialogComponent>,
@@ -53,6 +55,9 @@ public get isAdding(): boolean {
   return this.data.tipo === 'add';
 }
 
+public get isDetails(): boolean {
+  return this.data.tipo === 'details';
+}
 
 
 

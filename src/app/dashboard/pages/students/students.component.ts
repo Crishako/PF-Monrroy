@@ -9,12 +9,21 @@ import { StudentsDialogComponent } from './components/students-dialog/students-d
   templateUrl: './students.component.html',
   styleUrls: ['./students.component.scss']
 })
-export class StudentsComponent {
+export class StudentsComponent  {
 
   students$: Observable<any>;
 
   constructor(private studentService: StudentService, private matDialog: MatDialog){
     this.students$ = this.studentService.getStudents();
+  }
+
+  onDetails(studentId:number):void{
+    const tipo = 'details';
+  
+    this.matDialog
+      .open(StudentsDialogComponent, {
+        data: { student: studentId, tipo: tipo }
+      })
   }
 
   addStudent(): void {
@@ -72,7 +81,6 @@ export class StudentsComponent {
               (updatedStudents) => {
                 // Actualiza la tabla con la nueva lista de estudiantes después de la eliminación.
                 this.students$ = this.studentService.getStudents();
-                console.log('Estudiante eliminado:', result);
               },
               (error) => {
                 // Maneja el error si es necesario.
