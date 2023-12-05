@@ -5,6 +5,9 @@ import { BehaviorSubject, Observable , map} from 'rxjs';
 import { User } from '../models/user';
 import { LoginPayload } from '../models/login';
 import { RegisterPayload } from '../models/register';
+import { Store } from '@ngrx/store';
+import { AuthActions } from '../store/auth.actions';
+import { selectAuthUser } from '../store/auth.selector';
 
 @Injectable({
   providedIn: 'root'
@@ -13,11 +16,17 @@ export class AuthService {
 
   private _authUser$ = new BehaviorSubject<User | null>(null);
 
-  public authUser$ = this._authUser$.asObservable();
+  public authUser$ = this.store.select(selectAuthUser);
 
   private apiUrl = "https://654bf2e15b38a59f28eff3b9.mockapi.io/api/v1/";
 
-  constructor(private httpClient: HttpClient, private router: Router) {}
+  constructor(private httpClient: HttpClient, private router: Router, private store: Store) {}
+
+
+  private handleAuthUser(authUser: User): void{
+    this.store.dispatch(AuthActions.setAuthUser({ data: authUser }));
+    localStorage.setItem('token', authUser.token);
+  }
 
   login(payload: LoginPayload): void {
     // const headers = new HttpHeaders({
@@ -34,8 +43,9 @@ export class AuthService {
           } else {
             const authUser = response[0];
             if(authUser.password == payload.password){
-              this._authUser$.next(authUser);
-              localStorage.setItem('token', authUser.token);
+              // this._authUser$.next(authUser);
+              // localStorage.setItem('token', authUser.token);
+              this.handleAuthUser(authUser);
               this.router.navigate(['/dashboard/home']);
             }else{
               alert('Usuario o contrasena invalidos');
@@ -94,8 +104,7 @@ export class AuthService {
             return false;
           } else {
             const authUser = users[0];
-            this._authUser$.next(authUser);
-            localStorage.setItem('token', authUser.token);
+            this.handleAuthUser(authUser);
             return true;
           }
         })

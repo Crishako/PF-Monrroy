@@ -5,5 +5,6 @@ export interface User {
     email: string;
     password: string;
     token: string; // Puedes ajustar el tipo de token según la estructura real
+    rol: string;
     createdAt: string ;
   }

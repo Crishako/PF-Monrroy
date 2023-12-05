@@ -10,7 +10,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { StoreModule } from '@ngrx/store';
 import { CounterComponent } from './counter/counter.component';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { appReducer } from './store';
+import { appReducer } from './auth/store';
 
 @NgModule({
   declarations: [
