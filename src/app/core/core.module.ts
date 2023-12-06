@@ -14,9 +14,7 @@ import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
   ],
   providers: [
     {
-      // Cuando los componentes de ANG Material necesiten cargar la config por defecto
       provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
-      // Utiliza este valor, o esta config por defecto:
       useValue: {
         appearance: 'outline',
       },

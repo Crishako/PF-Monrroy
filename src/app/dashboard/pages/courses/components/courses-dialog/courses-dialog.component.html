@@ -1,5 +1,5 @@
 <h1 mat-dialog-title>
-    {{ isEditing ? "Editando Curso" : isDeleting ? "Eliminando Curso" : "Agregando Curso" }}
+    {{ isEditing ? "Editando Curso" : isDeleting ? "Eliminando Curso" : isDetails ? "Detalles Curso" : isInscription ? "Inscribiendo clase para Curso" : "Agregando Curso" }}
   </h1>
   
   <div mat-dialog-content>
@@ -70,6 +70,51 @@
       </form>
     </ng-container>
     
+    <ng-container *ngIf="isInscription">
+      <ng-container *ngIf="lastPartOfLectures && lastPartOfLectures.length > 0 ; else noLectures">
+        <mat-selection-list [(ngModel)]="selectedLectureIds">
+          <mat-list-option *ngFor="let item of lastPartOfLectures" [value]="item.id">
+            {{ item.nombre }}
+          </mat-list-option>
+        </mat-selection-list>
+      </ng-container>
+      <ng-template #noLectures>
+          <p>No hay clases inscritas de momento</p>
+          <div class="d-flex justify-content-center">
+            <button mat-button color="primary">Agregar Clases</button>
+          </div>
+          
+      </ng-template>
+    </ng-container>
+
+    <ng-container *ngIf="isDetails">
+      <div class="row">
+          <div class="d-flex justify-content-between typo">
+              <span >Nombre:</span>
+              <span >{{ courseForm.get('nombre')?.value }}</span>
+          </div>
+          <mat-divider></mat-divider>
+          <div class="d-flex justify-content-between typo">
+              <span >Fecha inicio:</span>
+              <span >{{ courseForm.get('fecha_inicio')?.value | date:'longDate' }}</span>
+          </div>
+          <mat-divider></mat-divider>
+          <div class="d-flex justify-content-between typo">
+              <span >Fecha termino:</span>
+              <span >{{ courseForm.get('fecha_fin')?.value | date:'longDate' }}</span>
+          </div>
+          <mat-divider></mat-divider>
+          <div class="d-flex justify-content-between typo">
+              <span >Descripción:</span>
+              <span>{{ courseForm.get('descripcion')?.value || 'No hay descripción ingresada.' }}</span>
+          </div>
+          <div class="d-flex justify-content-between typo">
+            <span >Clases Registradas:</span>
+            <span >{{ courseForm.get('clases')?.value?.length || 0}}</span>
+        </div>
+      </div>
+  </ng-container>
+
     <ng-container *ngIf="isDeleting">
       <p>¿Está seguro de que desea eliminar este curso?</p>
     </ng-container>
@@ -77,12 +122,16 @@
   
   <div mat-dialog-actions>
     
+    <ng-container *ngIf="isDetails">
+      <button mat-dialog-close mat-button>Cancelar</button>
+    </ng-container>
+    
     <ng-container *ngIf="isEditing || isDeleting">
       <button mat-dialog-close mat-button>Cancelar</button>
       <button mat-button (click)="onSubmit()">{{ isEditing ? "Guardar" : "Eliminar" }}</button>
     </ng-container>
-  
-    <ng-container *ngIf="!isEditing && !isDeleting">
+    
+    <ng-container *ngIf="!isEditing && !isDeleting && !isDetails">
       <button mat-dialog-close mat-button>Cancelar</button>
       <button (click)="onSubmit()" mat-button>{{ isEditing ? "Guardar" : "Agregar" }}</button>
     </ng-container>

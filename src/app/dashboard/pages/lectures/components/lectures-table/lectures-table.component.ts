@@ -10,11 +10,16 @@ export class LecturesTableComponent {
   @Input()
   dataSource: Lecture[] = [];
 
+  @Input() role: string | null | undefined;
+
   @Output()
   editLecture = new EventEmitter();
 
   @Output()
   deleteLecture = new EventEmitter();
+
+  @Output()
+  detailsLecture = new EventEmitter();
 
   displayedColumns = ['id', 'name', 'profesor', 'horario', 'actions'];
 }

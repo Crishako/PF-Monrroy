@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable,catchError,map, of, tap} from 'rxjs';
+import { BehaviorSubject, Observable,catchError,map, of, tap, throwError} from 'rxjs';
 import { Course } from 'src/app/dashboard/models/course';
 import { Student } from 'src/app/dashboard/models/student';
 
@@ -44,6 +44,34 @@ export class StudentService {
     );
   }
 
+  addCoursesToStudent(studentId: number, courseIds: number[]): Observable<Student> {
+    const url = `${this.apiUrl}/students/${studentId}`;
+  
+    const currentStudent = this.students.find((student) => student.id === studentId);
+  
+    if (!currentStudent) {
+      return throwError('Estudiante no encontrado');
+    }
+  
+    const updatedStudent: Student = {
+      ...currentStudent,
+      cursos: currentStudent.cursos ? [...currentStudent.cursos, ...courseIds] : [...courseIds],
+    };
+  
+    return this.http.put<Student>(url, updatedStudent).pipe(
+      tap(() => {
+        this.students = this.students.map((student) =>
+          student.id === studentId ? updatedStudent : student
+        );
+        this._student$.next(updatedStudent);
+        alert('Cursos agregados al estudiante');
+      }),
+      catchError((err) => {
+        alert('Error al agregar cursos al estudiante');
+        throw err;
+      })
+    );
+  }
 
   //FALTA COMPLETAR ESTA FUNCIÓN
   getStudentById$(id: number): Observable<Student | undefined> {
@@ -66,10 +94,10 @@ export class StudentService {
       .pipe(
         tap((student) => {
           this._student$.next(student);
-          alert('Usuario creado');
+          alert('Alumno creado');
         }),
         catchError((err) => {
-          alert('Error al registrar usuario');
+          alert('Error al registrar alumno');
           throw err; 
         })
       );
@@ -79,12 +107,12 @@ export class StudentService {
   
 
   deleteStudent(studentId: number): Observable<Student[]> {
-    // Envía una solicitud DELETE al servidor para eliminar el estudiante con el ID especificado.
+  
     return this.http
       .delete<Student[]>(`${this.apiUrl}/students/${studentId}`)
       .pipe(
         catchError((err) => {
-          // Puedes manejar el error según tus necesidades
+  
           throw err;
         })
       );
@@ -96,7 +124,6 @@ export class StudentService {
       .put<Student[]>(`${this.apiUrl}/students/${id}`, payload)
       .pipe(
         catchError((err) => {
-          // Puedes manejar el error según tus necesidades
           throw err;
         })
       );

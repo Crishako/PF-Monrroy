@@ -10,11 +10,20 @@ export class CoursesTableComponent {
   @Input()
   dataSource: Course[] = [];
 
+  @Input() role: string | null | undefined;
+
   @Output()
   editCourse = new EventEmitter();
 
   @Output()
   deleteCourse = new EventEmitter();
+
+  @Output()
+  detailsCourse = new EventEmitter();
+
+  @Output()
+  addLectureCourse = new EventEmitter();
+  
 
   displayedColumns = ['id', 'nombre', 'fecha_inicio', 'fecha_fin', 'actions'];
 }

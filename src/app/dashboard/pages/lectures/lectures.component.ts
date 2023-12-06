@@ -4,6 +4,8 @@ import { LectureService } from './services/lecture.service';
 import { MatDialog } from '@angular/material/dialog';
 import { LecturesDialogComponent } from './components/lectures-dialog/lectures-dialog.component';
 import { Lecture } from '../../models/lecture';
+import { User } from 'src/app/auth/models/user';
+import { AuthService } from 'src/app/auth/services/auth.service';
 
 @Component({
   selector: 'app-lectures',
@@ -13,11 +15,23 @@ import { Lecture } from '../../models/lecture';
 export class LecturesComponent {
 
   lectures$: Observable<any>;
+  public authUser$: Observable<User | null>;
+  role$: Observable<string | undefined>;
 
-  constructor(private lectureService: LectureService, private matDialog: MatDialog){
+  constructor(private lectureService: LectureService, private matDialog: MatDialog,  private authService: AuthService){
     this.lectures$ = this.lectureService.getLectures();
+    this.authUser$ = this.authService.authUser$;
+    this.role$ = this.authUser$.pipe(map((user) => user?.role));
   }
 
+  onDetails(lectureId:number):void{
+    const tipo = 'details';
+  
+    this.matDialog
+      .open(LecturesDialogComponent, {
+        data: { lecture: lectureId, tipo: tipo }
+      })
+  }
   
   addLecture(): void {
     let tipo = 'add';
@@ -74,10 +88,8 @@ export class LecturesComponent {
             this.lectureService.deleteLecture(lectureId).subscribe(
               (updateLectures) => {
                 this.lectures$ = this.lectureService.getLectures();
-                console.log('Clase eliminada:', result);
               },
               (error) => {
-                console.error('Error al eliminar Clase', error);
               }
             );
           }

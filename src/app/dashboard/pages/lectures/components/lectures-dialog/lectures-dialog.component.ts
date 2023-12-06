@@ -32,8 +32,6 @@ constructor(
     
     this.lectureService.getLectureById$(data.lecture).subscribe({
       next: (s) =>{
-        console.log(s);
-        
         if (s) {
           this.lectureForm.patchValue(s);
         }
@@ -53,6 +51,10 @@ public get isDeleting(): boolean {
 
 public get isAdding(): boolean {
   return this.data.tipo === 'add';
+}
+
+public get isDetails(): boolean {
+  return this.data.tipo === 'details';
 }
 
 

@@ -1,6 +1,17 @@
+<div class="p-2" >
+    <div class="d-flex justify-content-center align-items-center">
+        <p class="">
+        Estas navegando actualmente como: <b>{{ role$ | async }}</b>
+        </p>
+    </div>
+</div>
+  
+
 <mat-nav-list class="sidenav-content">
     <a mat-list-item [routerLink]="['/dashboard']" routerLinkActive="active">Inicio</a>
-    <a mat-list-item [routerLink]="['/dashboard/students']" routerLinkActive="active">Alumnos</a>
+    <a mat-list-item [routerLink]="['/dashboard/users']"  *ngIf="(role$ | async) === 'ADMIN'" routerLinkActive="active">Usuarios</a>
+    <a mat-list-item [routerLink]="['/dashboard/students']"  *ngIf="(role$ | async) !== 'STUDENT'" routerLinkActive="active">Alumnos</a>
     <a mat-list-item [routerLink]="['/dashboard/courses']" routerLinkActive="active">Cursos</a>
     <a mat-list-item [routerLink]="['/dashboard/lectures']" routerLinkActive="active">Clases</a>
+    <a mat-list-item  (click)="logOut.emit()"><div class="d-flex align-items-center">Cerrar Sesión<mat-icon color="warn">logout</mat-icon></div></a>
 </mat-nav-list>

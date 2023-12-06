@@ -5,7 +5,7 @@ export interface Student {
   edad: number;
   genero: string;
   email: string;
-  cursos: [] | null;
+  cursos: number[] | null;
 }
 
 

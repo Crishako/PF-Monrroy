@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Course } from 'src/app/dashboard/models/course';
-import { BehaviorSubject, Observable, catchError, map, of, tap } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, map, of, tap, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -96,4 +96,35 @@ export class CourseService {
         })
       );
   }
+
+  addLectureToCourse(courseId: number, lectureIds: number[]): Observable<Course> {
+    const url = `${this.apiUrl}/courses/${courseId}`;
+  
+    const currentCourse = this.courses.find((course) => course.id === courseId);
+  
+    if (!currentCourse) {
+      return throwError('Estudiante no encontrado');
+    }
+  
+    const updatedCourse: Course = {
+      ...currentCourse,
+      clases: currentCourse.clases ? [...currentCourse.clases, ...lectureIds] : [...lectureIds],
+    };
+  
+    return this.http.put<Course>(url, updatedCourse).pipe(
+      tap(() => {
+        this.courses = this.courses.map((course) =>
+        course.id === courseId ? updatedCourse : course
+        );
+        this._course$.next(updatedCourse);
+        alert('Clases agregadas al curso');
+      }),
+      catchError((err) => {
+        alert('Error al agregar clases al curso');
+        throw err;
+      })
+    );
+  }
+
+  
 }

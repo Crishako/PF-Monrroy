@@ -4,6 +4,8 @@ import { CourseService } from './services/course.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CoursesDialogComponent } from './components/courses-dialog/courses-dialog.component';
 import { Course } from '../../models/course';
+import { User } from 'src/app/auth/models/user';
+import { AuthService } from 'src/app/auth/services/auth.service';
 
 @Component({
   selector: 'app-courses',
@@ -12,11 +14,24 @@ import { Course } from '../../models/course';
 })
 export class CoursesComponent {
   courses$: Observable<any>;
+  public authUser$: Observable<User | null>;
+  role$: Observable<string | undefined>;
 
-  constructor(private coursesService: CourseService, private matDialog: MatDialog){
+
+  constructor(private coursesService: CourseService, private matDialog: MatDialog, private authService: AuthService){
     this.courses$ = this.coursesService.getCourses();
+    this.authUser$ = this.authService.authUser$;
+    this.role$ = this.authUser$.pipe(map((user) => user?.role));
   }
 
+  onDetails(courseId:number):void{
+    const tipo = 'details';
+  
+    this.matDialog
+      .open(CoursesDialogComponent, {
+        data: { course: courseId, tipo: tipo }
+      })
+  }
   
   addCourse(): void {
     let tipo = 'add';
@@ -68,7 +83,6 @@ export class CoursesComponent {
             this.coursesService.deleteCourse(courseId).subscribe(
               (updateCourses) => {
                 this.courses$ = this.coursesService.getCourses();
-                console.log('Curso eliminado:', result);
               },
               (error) => {
                 console.error('Error al eliminar Curso', error);
@@ -99,6 +113,32 @@ export class CoursesComponent {
               (error) => {
                 // Maneja el error si es necesario.
                 console.error('Error al editar curso', error);
+              }
+            );
+          }
+        },
+      });
+  }
+
+  onAddLectureCourse(courseId: number): void {
+    let tipo = 'addlecture';
+    this.matDialog
+      .open(CoursesDialogComponent, {
+        data: { tipo }
+      })
+      .afterClosed()
+      .subscribe({
+        next: (result) => {
+          if (result && result.clases && result.clases.length > 0) {
+            const clasesSeleccionadas = result.clases.map((lectureId: any) => Number(lectureId));
+            console.log(clasesSeleccionadas);
+            
+            this.coursesService.addLectureToCourse(courseId, clasesSeleccionadas).subscribe(
+              (updatedCourse) => {
+                this.courses$ = this.coursesService.getCourses();
+              },
+              (error) => {
+                console.error('Error al agregar clases al curso', error);
               }
             );
           }

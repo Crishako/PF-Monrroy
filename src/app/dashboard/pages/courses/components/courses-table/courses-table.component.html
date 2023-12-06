@@ -43,7 +43,7 @@
       <th mat-header-cell *matHeaderCellDef>Acciones</th>
   
       <td mat-cell *matCellDef="let course">
-        <button [routerLink]="course.id" mat-icon-button color="accent" disabled>
+        <button  (click)="detailsCourse.emit(course.id)" mat-icon-button color="accent">
           <mat-icon>visibility</mat-icon>
         </button>
   
@@ -51,6 +51,7 @@
           (click)="deleteCourse.emit(course.id)"
           mat-icon-button
           color="warn"
+          *ngIf="role  === 'ADMIN' || role === 'DIRECTOR'"
         >
           <mat-icon>delete</mat-icon>
         </button>
@@ -59,8 +60,17 @@
           (click)="editCourse.emit(course.id)"
           mat-icon-button
           color="primary"
+          *ngIf="role  === 'ADMIN' || role === 'DIRECTOR'"
         >
           <mat-icon>edit</mat-icon>
+        </button>
+        <button
+            (click)="addLectureCourse.emit(course.id)"
+            mat-icon-button
+            style="color:blue;"
+            *ngIf="role  !== 'STUDENT'"
+          >
+          <mat-icon>add</mat-icon>
         </button>
       </td>
     </ng-container>

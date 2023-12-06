@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { StoreModule } from '@ngrx/store'; // Importa StoreModule
 
 import { DashboardComponent } from './dashboard.component';
 import { ToolbarComponent } from './components/layout/toolbar/toolbar.component';
@@ -18,10 +19,20 @@ describe('DashboardComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [DashboardComponent, ToolbarComponent,SidenavComponent],
-      imports: [HttpClientTestingModule, MatSidenavModule,BrowserAnimationsModule, RouterModule, MatToolbarModule, MatIconModule, MatListModule], 
+      declarations: [DashboardComponent, ToolbarComponent, SidenavComponent],
+      imports: [
+        HttpClientTestingModule,
+        MatSidenavModule,
+        BrowserAnimationsModule,
+        RouterModule,
+        MatToolbarModule,
+        MatIconModule,
+        MatListModule,
+        DashboardRoutingModule,
+        StoreModule.forRoot({}), // Importa StoreModule y configúralo
+      ],
       providers: [
-        { provide: ActivatedRoute, useClass: DashboardRoutingModule }, // Provide ActivatedRouteStub
+        { provide: ActivatedRoute, useClass: DashboardRoutingModule },
       ],
     });
 
