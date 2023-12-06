@@ -31,7 +31,7 @@ describe('UsersDialogComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('UsersDialog debería ser creado', () => {
     expect(component).toBeTruthy();
   });
 });

@@ -3,6 +3,8 @@ import { Observable, map, take } from 'rxjs';
 import { StudentService } from './services/student.service';
 import { MatDialog } from '@angular/material/dialog';
 import { StudentsDialogComponent } from './components/students-dialog/students-dialog.component';
+import { AuthService } from 'src/app/auth/services/auth.service';
+import { User } from 'src/app/auth/models/user';
 
 @Component({
   selector: 'app-students',
@@ -11,11 +13,18 @@ import { StudentsDialogComponent } from './components/students-dialog/students-d
 })
 export class StudentsComponent  {
 
+  public authUser$: Observable<User | null>;
   students$: Observable<any>;
+  role$: Observable<string | undefined>;
 
-  constructor(private studentService: StudentService, private matDialog: MatDialog){
+  constructor(private studentService: StudentService, private matDialog: MatDialog, private authService: AuthService){
     this.students$ = this.studentService.getStudents();
+    this.authUser$ = this.authService.authUser$;
+    this.role$ = this.authUser$.pipe(map((user) => user?.role));
+    
   }
+
+ 
 
   onDetails(studentId:number):void{
     const tipo = 'details';
@@ -101,14 +110,11 @@ export class StudentsComponent  {
       .subscribe({
         next: (result) => {
           if (result) {
-            // Llama al servicio para realizar la eliminación
             this.studentService.deleteStudent(studentId).subscribe(
               (updatedStudents) => {
-                // Actualiza la tabla con la nueva lista de estudiantes después de la eliminación.
                 this.students$ = this.studentService.getStudents();
               },
               (error) => {
-                // Maneja el error si es necesario.
                 console.error('Error al eliminar estudiante', error);
               }
             );
@@ -134,7 +140,6 @@ export class StudentsComponent  {
                 this.students$ = this.studentService.getStudents();
               },
               (error) => {
-                // Maneja el error si es necesario.
                 console.error('Error al editar estudiante', error);
               }
             );

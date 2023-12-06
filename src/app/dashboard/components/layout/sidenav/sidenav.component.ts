@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, map } from 'rxjs';
+import { Observable, map, of } from 'rxjs';
 import { User } from 'src/app/auth/models/user';
 import { AuthService } from 'src/app/auth/services/auth.service';
 
@@ -20,7 +20,9 @@ export class SidenavComponent {
   }
 
   get role$(): Observable<string | undefined> {
-    return this.authUser$.pipe(map((user) => user?.role));
+    return this.authUser$?.pipe(
+      map((user) => user?.role)
+    ) || of(undefined);
   }
   
   isActive: boolean;

@@ -4,6 +4,8 @@ import { CourseService } from './services/course.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CoursesDialogComponent } from './components/courses-dialog/courses-dialog.component';
 import { Course } from '../../models/course';
+import { User } from 'src/app/auth/models/user';
+import { AuthService } from 'src/app/auth/services/auth.service';
 
 @Component({
   selector: 'app-courses',
@@ -12,9 +14,14 @@ import { Course } from '../../models/course';
 })
 export class CoursesComponent {
   courses$: Observable<any>;
+  public authUser$: Observable<User | null>;
+  role$: Observable<string | undefined>;
 
-  constructor(private coursesService: CourseService, private matDialog: MatDialog){
+
+  constructor(private coursesService: CourseService, private matDialog: MatDialog, private authService: AuthService){
     this.courses$ = this.coursesService.getCourses();
+    this.authUser$ = this.authService.authUser$;
+    this.role$ = this.authUser$.pipe(map((user) => user?.role));
   }
 
   onDetails(courseId:number):void{

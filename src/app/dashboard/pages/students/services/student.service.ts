@@ -107,12 +107,12 @@ export class StudentService {
   
 
   deleteStudent(studentId: number): Observable<Student[]> {
-    // Envía una solicitud DELETE al servidor para eliminar el estudiante con el ID especificado.
+  
     return this.http
       .delete<Student[]>(`${this.apiUrl}/students/${studentId}`)
       .pipe(
         catchError((err) => {
-          // Puedes manejar el error según tus necesidades
+  
           throw err;
         })
       );
@@ -124,7 +124,6 @@ export class StudentService {
       .put<Student[]>(`${this.apiUrl}/students/${id}`, payload)
       .pipe(
         catchError((err) => {
-          // Puedes manejar el error según tus necesidades
           throw err;
         })
       );

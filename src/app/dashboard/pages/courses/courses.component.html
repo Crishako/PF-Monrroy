@@ -1,6 +1,6 @@
 <h1 appFontSize20>Cursos</h1>
 
-<div class="d-flex justify-content-end mb-3">
+<div class="d-flex justify-content-end mb-3" *ngIf="(role$ | async) === 'ADMIN' || (role$ | async) === 'DIRECTOR'">
   <button (click)="addCourse()" mat-flat-button color="primary">
     Agregar curso
   </button>
@@ -8,6 +8,7 @@
 
 
 <app-courses-table
+  [role]="(role$ | async)"
   [dataSource]="(courses$ | async) || []"
   (addLectureCourse)="onAddLectureCourse($event)"
   (deleteCourse)="onDeleteCourse($event)"

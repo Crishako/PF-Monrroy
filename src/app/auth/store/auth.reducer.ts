@@ -8,7 +8,7 @@ export interface State{
     authUser: User | null;
 }
 
-const initialState: State = {
+export const initialState: State = {
     authUser: null,
 }
 
@@ -17,8 +17,3 @@ export const reducer = createReducer(initialState,
 
     on(AuthActions.resetState, () => initialState),
 );
-
-// export const authFeature = createFeature({
-//     name: authFeatureKey,
-//     reducer,
-// });

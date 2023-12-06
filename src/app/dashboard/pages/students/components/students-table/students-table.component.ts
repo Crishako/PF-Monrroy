@@ -11,6 +11,8 @@ export class StudentsTableComponent {
   @Input()
   dataSource: Student[] = [];
 
+  @Input() role: string | null | undefined;
+
   @Output()
   editCourse = new EventEmitter();
 

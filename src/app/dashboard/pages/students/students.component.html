@@ -1,15 +1,13 @@
 <h1 appFontSize20>Alumnos</h1>
 
-<div class="d-flex justify-content-end mb-3">
-  <!-- <button style="margin-right: 1rem;" (click)="addCourseStudent()" mat-flat-button color="primary">
-    Inscribir alumno curso
-  </button> -->
+<div class="d-flex justify-content-end mb-3"  *ngIf="(role$ | async) === 'ADMIN' || (role$ | async) === 'DIRECTOR'">
   <button (click)="addStudent()" mat-flat-button color="primary">
     Agregar alumno
   </button>
 </div>
 
 <app-students-table
+  [role]="(role$ | async)"
   [dataSource]="(students$ | async) || []"
   (addCourseStudent)="onAddCourseStudent($event)"
   (deleteCourse)="onDeleteStudent($event)"

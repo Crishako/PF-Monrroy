@@ -7,13 +7,13 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MatTableModule } from '@angular/material/table';
 import { CoursesTableComponent } from './components/courses-table/courses-table.component';
 import { MatCardModule } from '@angular/material/card';
+import { provideMockStore } from '@ngrx/store/testing'; 
+import { StoreModule } from '@ngrx/store';
 
 class MockCourseService {
   getCourses(): Observable<any> {
-   
     return of([]);
   }
-
 }
 
 describe('CoursesComponent', () => {
@@ -22,12 +22,19 @@ describe('CoursesComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [CoursesComponent, CoursesTableComponent], 
-      imports: [MatDialogModule, HttpClientTestingModule, MatTableModule, MatCardModule], 
+      declarations: [CoursesComponent, CoursesTableComponent],
+      imports: [
+        MatDialogModule,
+        HttpClientTestingModule,
+        MatTableModule,
+        MatCardModule,
+        StoreModule.forRoot({}),
+      ],
       providers: [
         { provide: MatDialogRef, useValue: {} },
         { provide: MAT_DIALOG_DATA, useValue: {} },
         { provide: CourseService, useClass: MockCourseService },
+        provideMockStore(),
       ],
     });
 

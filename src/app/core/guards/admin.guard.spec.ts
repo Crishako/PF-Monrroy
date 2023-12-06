@@ -11,7 +11,7 @@ describe('adminGuard', () => {
     TestBed.configureTestingModule({});
   });
 
-  it('should be created', () => {
+  it('Adminguard debe ser creado', () => {
     expect(executeGuard).toBeTruthy();
   });
 });

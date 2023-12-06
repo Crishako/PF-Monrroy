@@ -1,4 +1,3 @@
-// Import necessary modules
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
@@ -6,6 +5,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SidenavComponent } from './sidenav.component';
 import { RouterModule } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientModule } from '@angular/common/http';
+import { AuthService } from 'src/app/auth/services/auth.service';
+import { MatIconModule } from '@angular/material/icon';
+
+class MockAuthService {
+
+}
 
 describe('SidenavComponent', () => {
   let component: SidenavComponent;
@@ -16,10 +22,15 @@ describe('SidenavComponent', () => {
       declarations: [SidenavComponent],
       imports: [
         MatSidenavModule,
-        MatListModule, 
+        MatListModule,
         BrowserAnimationsModule,
         RouterModule,
-        RouterTestingModule
+        RouterTestingModule,
+        HttpClientModule,
+        MatIconModule
+      ],
+      providers: [
+        { provide: AuthService, useClass: MockAuthService },
       ],
     });
 

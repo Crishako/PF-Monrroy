@@ -10,6 +10,8 @@ export class LecturesTableComponent {
   @Input()
   dataSource: Lecture[] = [];
 
+  @Input() role: string | null | undefined;
+
   @Output()
   editLecture = new EventEmitter();
 

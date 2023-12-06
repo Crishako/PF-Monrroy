@@ -5,8 +5,6 @@ import { AuthRoutingModule } from './auth-routing.module';
 import { AuthComponent } from './auth.component';
 import { SharedModule } from '../shared/shared.module';
 import { AuthService } from './services/auth.service';
-import { StoreModule } from '@ngrx/store';
-// import { authFeature } from './store/auth.reducer';
 
 
 @NgModule({
@@ -23,7 +21,6 @@ import { StoreModule } from '@ngrx/store';
     CommonModule,
     AuthRoutingModule,
     SharedModule,
-    // StoreModule.forFeature(authFeature),
   ]
 })
 export class AuthModule { }

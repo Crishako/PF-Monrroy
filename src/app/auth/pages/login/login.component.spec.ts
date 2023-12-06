@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientTestingModule } from '@angular/common/http/testing'; 
 import { LoginComponent } from './login.component';
 import { AuthService } from '../../services/auth.service';
+import { StoreModule } from '@ngrx/store';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -21,6 +22,7 @@ describe('LoginComponent', () => {
         BrowserAnimationsModule,
         ReactiveFormsModule,
         HttpClientTestingModule, 
+        StoreModule.forRoot({}),
       ],
       providers: [AuthService],
     });

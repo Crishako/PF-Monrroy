@@ -62,6 +62,7 @@
           (click)="deleteCourse.emit(student.id)"
           mat-icon-button
           color="warn"
+          *ngIf="role  === 'ADMIN' || role === 'DIRECTOR'"
         >
           <mat-icon>delete</mat-icon>
         </button>
@@ -70,6 +71,7 @@
           (click)="editCourse.emit(student.id)"
           mat-icon-button
           color="primary"
+          *ngIf="role  === 'ADMIN' || role === 'DIRECTOR'"
         >
           <mat-icon>edit</mat-icon>
         </button>

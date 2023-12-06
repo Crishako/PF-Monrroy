@@ -2,6 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { LecturesComponent } from './lectures.component';
 import { LecturesModule } from './lectures.module';
+import { Store } from '@ngrx/store'; // Asegúrate de importar el servicio Store
+import { of } from 'rxjs'; // Añade la importación de 'of' desde rxjs
 
 describe('LecturesComponent', () => {
   let component: LecturesComponent;
@@ -10,7 +12,16 @@ describe('LecturesComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [LecturesComponent],
-      imports: [HttpClientTestingModule, LecturesModule], 
+      imports: [HttpClientTestingModule, LecturesModule],
+      providers: [
+        // Proporciona un mock del servicio Store
+        {
+          provide: Store,
+          useValue: {
+            select: () => of(null), // Puedes ajustar esto según tus necesidades
+          },
+        },
+      ],
     });
 
     fixture = TestBed.createComponent(LecturesComponent);
