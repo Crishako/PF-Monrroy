@@ -62,6 +62,31 @@ export class StudentsComponent  {
         },
       });
   }
+
+  onAddCourseStudent(studentId: number): void {
+    let tipo = 'addcourse';
+    this.matDialog
+      .open(StudentsDialogComponent, {
+        data: { tipo }
+      })
+      .afterClosed()
+      .subscribe({
+        next: (result) => {
+          
+          if (result && result.cursos && result.cursos.length > 0) {
+            const cursosSeleccionados = result.cursos.map((cursoId: any) => Number(cursoId));
+            this.studentService.addCoursesToStudent(studentId, cursosSeleccionados).subscribe(
+              (updatedStudent) => {
+                this.students$ = this.studentService.getStudents();
+              },
+              (error) => {
+                console.error('Error al agregar cursos al estudiante', error);
+              }
+            );
+          }
+        },
+      });
+  }
   
   
 

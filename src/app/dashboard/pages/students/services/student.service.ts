@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable,catchError,map, of, tap} from 'rxjs';
+import { BehaviorSubject, Observable,catchError,map, of, tap, throwError} from 'rxjs';
 import { Course } from 'src/app/dashboard/models/course';
 import { Student } from 'src/app/dashboard/models/student';
 
@@ -44,6 +44,34 @@ export class StudentService {
     );
   }
 
+  addCoursesToStudent(studentId: number, courseIds: number[]): Observable<Student> {
+    const url = `${this.apiUrl}/students/${studentId}`;
+  
+    const currentStudent = this.students.find((student) => student.id === studentId);
+  
+    if (!currentStudent) {
+      return throwError('Estudiante no encontrado');
+    }
+  
+    const updatedStudent: Student = {
+      ...currentStudent,
+      cursos: currentStudent.cursos ? [...currentStudent.cursos, ...courseIds] : [...courseIds],
+    };
+  
+    return this.http.put<Student>(url, updatedStudent).pipe(
+      tap(() => {
+        this.students = this.students.map((student) =>
+          student.id === studentId ? updatedStudent : student
+        );
+        this._student$.next(updatedStudent);
+        alert('Cursos agregados al estudiante');
+      }),
+      catchError((err) => {
+        alert('Error al agregar cursos al estudiante');
+        throw err;
+      })
+    );
+  }
 
   //FALTA COMPLETAR ESTA FUNCIÓN
   getStudentById$(id: number): Observable<Student | undefined> {

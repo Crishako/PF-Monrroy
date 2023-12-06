@@ -17,6 +17,9 @@ export class StudentsTableComponent {
   @Output()
   detailsStudent = new EventEmitter();
 
+  @Output()
+  addCourseStudent = new EventEmitter();
+
 
   @Output()
   deleteCourse = new EventEmitter();

@@ -9,7 +9,7 @@
 
 <mat-nav-list class="sidenav-content">
     <a mat-list-item [routerLink]="['/dashboard']" routerLinkActive="active">Inicio</a>
-    <a mat-list-item [routerLink]="['/dashboard/users']"  *ngIf="(role$ | async) === 'ADMIN' || (role$ | async) === 'DIRECTOR'" routerLinkActive="active">Usuarios</a>
+    <a mat-list-item [routerLink]="['/dashboard/users']"  *ngIf="(role$ | async) === 'ADMIN'" routerLinkActive="active">Usuarios</a>
     <a mat-list-item [routerLink]="['/dashboard/students']"  *ngIf="(role$ | async) !== 'STUDENT'" routerLinkActive="active">Alumnos</a>
     <a mat-list-item [routerLink]="['/dashboard/courses']" routerLinkActive="active">Cursos</a>
     <a mat-list-item [routerLink]="['/dashboard/lectures']" routerLinkActive="active">Clases</a>

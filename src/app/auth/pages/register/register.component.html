@@ -24,7 +24,13 @@
     
   </div>
 
-  <button (click)="register()" mat-flat-button style="background-color: #01783f; color: white;">
-    Register
-  </button>
+  <div class="d-flex justify-content-between">
+    <button (click)="register()" mat-flat-button style="background-color: #01783f; color: white;">
+      Register
+    </button>
+    <button routerLink="/login" mat-flat-button style="background-color: #780101; color: white;">
+      Cancelar
+    </button>
+  </div>
+  
 </form>
