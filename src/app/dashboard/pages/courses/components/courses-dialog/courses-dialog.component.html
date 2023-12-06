@@ -1,5 +1,5 @@
 <h1 mat-dialog-title>
-    {{ isEditing ? "Editando Curso" : isDeleting ? "Eliminando Curso" : isDetails ? "Detalles Curso" : "Agregando Curso" }}
+    {{ isEditing ? "Editando Curso" : isDeleting ? "Eliminando Curso" : isDetails ? "Detalles Curso" : isInscription ? "Inscribiendo clase para Curso" : "Agregando Curso" }}
   </h1>
   
   <div mat-dialog-content>
@@ -70,6 +70,23 @@
       </form>
     </ng-container>
     
+    <ng-container *ngIf="isInscription">
+      <ng-container *ngIf="lastPartOfLectures && lastPartOfLectures.length > 0 ; else noLectures">
+        <mat-selection-list [(ngModel)]="selectedLectureIds">
+          <mat-list-option *ngFor="let item of lastPartOfLectures" [value]="item.id">
+            {{ item.nombre }}
+          </mat-list-option>
+        </mat-selection-list>
+      </ng-container>
+      <ng-template #noLectures>
+          <p>No hay clases inscritas de momento</p>
+          <div class="d-flex justify-content-center">
+            <button mat-button color="primary">Agregar Clases</button>
+          </div>
+          
+      </ng-template>
+    </ng-container>
+
     <ng-container *ngIf="isDetails">
       <div class="row">
           <div class="d-flex justify-content-between typo">
@@ -93,7 +110,7 @@
           </div>
           <div class="d-flex justify-content-between typo">
             <span >Clases Registradas:</span>
-            <span >{{ courseForm.get('lectures')?.value?.length || 0}}</span>
+            <span >{{ courseForm.get('clases')?.value?.length || 0}}</span>
         </div>
       </div>
   </ng-container>

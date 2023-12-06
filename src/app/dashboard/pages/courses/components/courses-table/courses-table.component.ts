@@ -18,6 +18,9 @@ export class CoursesTableComponent {
 
   @Output()
   detailsCourse = new EventEmitter();
+
+  @Output()
+  addLectureCourse = new EventEmitter();
   
 
   displayedColumns = ['id', 'nombre', 'fecha_inicio', 'fecha_fin', 'actions'];

@@ -9,6 +9,7 @@
 
 <app-courses-table
   [dataSource]="(courses$ | async) || []"
+  (addLectureCourse)="onAddLectureCourse($event)"
   (deleteCourse)="onDeleteCourse($event)"
   (editCourse)="onEditCourse($event)"
   (detailsCourse)="onDetails($event)"

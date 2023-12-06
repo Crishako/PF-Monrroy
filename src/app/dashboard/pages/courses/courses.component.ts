@@ -113,4 +113,30 @@ export class CoursesComponent {
       });
   }
 
+  onAddLectureCourse(courseId: number): void {
+    let tipo = 'addlecture';
+    this.matDialog
+      .open(CoursesDialogComponent, {
+        data: { tipo }
+      })
+      .afterClosed()
+      .subscribe({
+        next: (result) => {
+          if (result && result.clases && result.clases.length > 0) {
+            const clasesSeleccionadas = result.clases.map((lectureId: any) => Number(lectureId));
+            console.log(clasesSeleccionadas);
+            
+            this.coursesService.addLectureToCourse(courseId, clasesSeleccionadas).subscribe(
+              (updatedCourse) => {
+                this.courses$ = this.coursesService.getCourses();
+              },
+              (error) => {
+                console.error('Error al agregar clases al curso', error);
+              }
+            );
+          }
+        },
+      });
+  }
+
 }
